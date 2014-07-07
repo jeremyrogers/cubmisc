@@ -1,0 +1,12 @@
+* rm_first_50aa
+
+	without x obs, remove the first 50 aa then check if sequence is longer than 150 aa
+	- simulating 4 chains 
+	- initial sd log is 1, 0.25, 2, 3 
+	- initial phi values drawn from logN with sd log of 1, 0.25, 2, 3 
+	- use 1000 iterations for run, 1000 iterations for burn in.
+	- check for convergence every 3000 iterations
+	- convergence criterion was Gelman score < 1.05
+	- final Gelman score is 1.1473 -> not converged according to criterion
+
+
