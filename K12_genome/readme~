@@ -1,6 +1,7 @@
 * rm_first_50aa
-
-	without x obs, remove the first 50 aa then check if sequence is longer than 150 aa
+	K12 genome fit without x obs.
+	Remove the first 50 aa then check if sequence is longer than 150 aa.
+	Observed data for comparison is from Li et al. 2014
 		- simulating 4 chains 
 		- initial sd log is 1, 0.25, 2, 3 
 		- initial phi values drawn from logN with sd log of 1, 0.25, 2, 3 

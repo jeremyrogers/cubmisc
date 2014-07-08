@@ -1,0 +1,47 @@
+using cubappr 
+reading sequences...
+generating other data...
+generate initial phi...
+running multichain cubappr 
+Gelman score:  1.35684191557169 
+Gelman score:  1.26439665458158 
+Gelman score:  1.22557216978925 
+Gelman score:  1.20502867139462 
+Gelman score:  1.19057404081972 
+Gelman score:  1.18167985214562 
+Gelman score:  1.17633657698631 
+Gelman score:  1.17191111272004 
+Gelman score:  1.16897520503193 
+Gelman score:  1.16573585175379 
+Gelman score:  1.16293981564725 
+Gelman score:  1.16056390580809 
+Gelman score:  1.15806724374811 
+Gelman score:  1.15591111591766 
+Gelman score:  1.15409649251629 
+Gelman score:  1.15295760021345 
+Gelman score:  1.15173721151183 
+Gelman score:  1.15036007507125 
+Gelman score:  1.14923809146088 
+Gelman score:  1.14843337784366 
+Gelman score:  1.1478381395527 
+Gelman score:  1.14742866148895 
+Gelman score:  1.14665756884625 
+Gelman score:  1.14591021517675 
+Gelman score:  1.14515491376064 
+Gelman score:  1.14451861763897 
+Gelman score:  1.14399917573899 
+Gelman score:  1.14359036137038 
+Gelman score:  1.14346866825168 
+Gelman score:  1.14345307310131 
+Gelman score:  1.14337475676543 
+Gelman score:  1.14320799698821 
+Gelman score:  1.14287162125345 
+Gelman score:  1.1428213844742 
+Gelman score:  1.14266216405371 
+Gelman score:  1.14241529206019 
+Gelman score:  1.14209636823629 
+Gelman score:  1.14182645896837 
+Gelman score:  1.14175122539579 
+Elapsed time for 4 runs on 4 cores was 163.06 min
+process results...
+saving results...
