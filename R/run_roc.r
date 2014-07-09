@@ -27,12 +27,12 @@ cat(paste("using", cubmethods, "\n"))
 
 
 ## I/O variables
-# sdlog <- 5 # has to be non 0 for cubappr
-# fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
-# fn.phi.in <- "../data/ecoli_X_obs.csv"
-# fn.phi.out <- "../results/test/test.phi"
-# fn.out <- "../results/test/test.dat"
-# cubmethods <- "cubappr"
+sdlog <- 5 # has to be non 0 for cubappr
+fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
+fn.phi.in <- "../data/ecoli_X_obs.csv"
+fn.phi.out <- "../results/test/test.phi"
+fn.out <- "../results/test/test.dat"
+cubmethods <- "cubappr"
 
 sdlog <- c(1, 0.25, 2, 3)
 
@@ -102,23 +102,42 @@ if(cubmethods == "cubappr") {
 cat(paste("running multichain", cubmethods, "\n"))
 seeds <- round(runif(config$n.runs, 1, 100000))
 s <- system.time(
-  if(cubmethods == "cubfits"){
-    #.CF.CT$parallel <- "mclapply"
-    .CF.CT$type.p <- "lognormal_bias"
-    .CF.CONF$scale.phi.Obs <- F
-    .CF.CONF$estimate.bias.Phi <- T
-    results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                           min=config$min.iter, max=config$max.iter, nchains=config$n.runs, thin=config$thin, eps=0.05, ncores=config$n.cores,
-                           reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
-                           nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
-                           model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
-  }else if(cubmethods == "cubappr") {
-    #.CF.CT$parallel <- "mclapply"
-    results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                           min=config$min.iter, max=config$max.iter, nchains=config$n.runs, thin=config$thin, eps=0.05, 
-                           ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
-                           nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
-                           model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)    
+  {
+    .CF.CT$parallel <- "mclapply"
+    if(cubmethods == "cubfits"){
+      .CF.CT$type.p <- "lognormal_bias"
+      .CF.CONF$scale.phi.Obs <- F
+      .CF.CONF$estimate.bias.Phi <- T
+      if(config$n.runs < 2)
+      {
+        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=0.1, frac2=0.5, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, thin=config$thin, eps=1, 
+                               reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
+                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init[[1]],
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+      }else{
+        results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, nchains=config$n.runs, thin=config$thin, eps=0.05, ncores=config$n.cores,
+                               reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
+                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+      }
+    }else if(cubmethods == "cubappr") {
+      if(config$n.runs < 2)
+      {
+        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=0.1, frac2=0.5, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, thin=config$thin, eps=1, 
+                               reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
+                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init[[1]],
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+      }else{
+        results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, nchains=config$n.runs, thin=config$thin, eps=0.05, 
+                               ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
+                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)        
+      }
+    }
   }
 ) 
 
