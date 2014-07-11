@@ -1,3 +1,5 @@
+##NOTES
+
 suppressMessages(library(cubfits, quietly = TRUE))
 setwd("~/CodonUsageBias/ecoli/R")
 source("visualize_utility.r")

@@ -77,6 +77,8 @@ get.logL <- function(ret, data, model="roc")
 #   return(seq.string)
 # }
 
+## RENAME: Reads in Xobs data and compares it to ORFs in FASTA!
+## 
 read.empirical.data <- function(fn, genome, env, th=-1)
 {
   ## load empirical data
@@ -98,6 +100,7 @@ generate.data <- function(genome, aa.names)
 {
   ## generate data set
   phi <- data.frame(names(genome), rlnorm(length(genome), 0, 1))
+  cat("generating codon counts and corresponding reu13.df")
   reu13.df <- gen.reu13.df(genome, phi, aa.names)
   
   y <- gen.y(genome, aa.names)

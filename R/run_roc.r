@@ -1,10 +1,18 @@
 suppressMessages(library(cubfits, quietly = TRUE))
 suppressMessages(library(psych, quietly = TRUE))
-#suppressMessages(library(Rmisc, quietly = TRUE))
+##suppressMessages(library(Rmisc, quietly = TRUE))
 suppressMessages(library(getopt, quietly = TRUE))
 
+##load helper functions used to process current project.
+## not general enough to include in package.
 source("run_utility.r")
 source("config.r")
+
+
+##Process input from command line
+# using getopt library
+
+##define matrix for options and flags that are passed to "Rscript run_roc.r ..." command 
 spec = matrix(c(
   'cubmethod', 'c', 2, "character",
   'fnin' , 'f', 1, "character",
@@ -17,33 +25,56 @@ spec = matrix(c(
 args <- commandArgs(trailingOnly = TRUE)
 opt <- getopt(spec, args)
 
+##Assigning options to variables
+##Question: why do they have different names?
+
+if(debug.code){
+  ## hard coded variables to be used when debugging.
+  ## to be removed later?
+  
+  ## I/O variables
+sdlog <- 5 # has to be non 0 for cubappr
+fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
+fn.phi.in <- "../data/ecoli_X_obs.csv"
+fn.phi.out <- "../results/test/test.phi"
+fn.out <- "../results/test/test.dat"
+cubmethods <- "cubappr"}else{
+  
 sdlog <- opt$sdlog
+## set method for either with Xobs, cubfits, or without Xobs, cubappr,
+## NOTE: cross validation approach, cubpred, is not supported in this script
 cubmethods <- opt$cubmethod
 fn.in <- opt$fnin
 fn.phi.in <- opt$fnpin
 fn.phi.out <- paste(opt$fnout, ".phi", sep="")
 fn.out <- paste(opt$fnout, ".dat", sep="")
 cat(paste("using", cubmethods, "\n"))
+}
 
 
-## I/O variables
-sdlog <- 5 # has to be non 0 for cubappr
-fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
-fn.phi.in <- "../data/ecoli_X_obs.csv"
-fn.phi.out <- "../results/test/test.phi"
-fn.out <- "../results/test/test.dat"
-cubmethods <- "cubappr"
-
-sdlog <- c(1, 0.25, 2, 3)
+##set of values for the independent MCMC chains.
+## determines sd(ln(phi)) when using SCUO for initial phi values
+## recommend using a wide range
+## NOTE: name should be changed to sdlog.phi.init
+##     : not consistent with some of the code above
+##     : Check to see if its dimensions matches config$n.runs
+sdlog <- c(0.5, 1, 2, 4)
 
 
+## cat vs. print?  Print to file?
 cat("reading sequences...\n")
+
+## readGenome function in cubfits package
 seq.string <- readGenome(fn.in, 0, 0)
 
 
+
+
+## if using Xobs data 
 if(cubmethods == "cubfits")
 {
-  cat("reading empirical data...\n")
+  ##[EXPLAIN WHAT'S GOING ON]
+  cat("reading gene expression measurements (Xobs) and compare to ORF list from FASTA file defined in fn.in variable.\n")
   ret.list <- read.empirical.data(fn.phi.in, seq.string, config$selected.env)
   phi.obs <- ret.list$empirical
   phi.obs <- phi.obs[order(names(phi.obs))]
@@ -52,29 +83,34 @@ if(cubmethods == "cubfits")
   sdlog <- ifelse(sdlog == 0, sdlog <- sd(log(phi.obs)), sdlog)
 }
 
+## MORE DETAILS!!!
 cat("generating other data...\n")
 data <- generate.data(seq.string, config$aa)
 
-cat("generate initial phi...\n")
+
+## 
+cat("generate initial phi using ")
 init.phi <- list()
 length(init.phi) <- config$n.runs
 if(config$use.scuo)
 {
+  cat("SCUO with sd(ln(phi)) values\n")
   scuo <- gen.scuo(seq.string, config$aa)
   scuo <- calc_scuo_values(scuo)$SCUO
   for(i in 1:config$n.runs)
   {
+    cat( paste("\t", sdlog[i],"\n") )
     randscuo <- scuo.random(scuo, meanlog = -sdlog[i]^2 / 2, sdlog = sdlog[i])
     randscuo <- randscuo / mean(randscuo)
     names(randscuo) <- names(seq.string)
     init.phi[[i]] <- randscuo
   }
 }else{
+  cat("Xobs data. Note: All chains starting with same initial phi values\n")
   if(cubmethods == "cubfits")
   {
     for(i in 1:config$n.runs){ init.phi[[i]] <- phi.obs }
   }else{
-    cat("reading empirical data...\n")
     ret.list <- read.empirical.data(fn.phi.in, seq.string, config$selected.env)
     phi.obs <- ret.list$empirical
     phi.obs <- phi.obs[order(names(phi.obs))]
@@ -82,25 +118,31 @@ if(config$use.scuo)
   }
 }
 
+##define objects to hold initial values and output from MCMC chains
 results <- list()
 length(results) <- config$n.runs
 p.init <- list(NULL)
 length(p.init) <- config$n.runs
 
+##Hard coding of initial values for pMat of each chain
+## c(sd_epsilon, meanlog(phi), sdlog(phi), K_x scaling constant)
 if(cubmethods == "cubfits"){
   p.init[[1]] <- c(0.5, -0.5, 1, 7)
   p.init[[2]] <- c(0.1, -0.03125, 0.25, 1)
   p.init[[3]] <- c(1.5, -2.0, 2, 5)
   p.init[[4]] <- c(1.0, -4.5, 3, 10)
-}
-if(cubmethods == "cubappr") {
+} else if(cubmethods == "cubappr") {
   p.init[[1]] <- c(-0.5, 1)
   p.init[[2]] <- c(-0.03125, 0.25)
   p.init[[3]] <- c(-2.0, 2)
   p.init[[4]] <- c(-4.5, 3)
 }
-cat(paste("running multichain", cubmethods, "\n"))
+
+##Change to reflect single chain possibility
+cat(paste("running ", cubmethods, " using multiple chains \n"))
 seeds <- round(runif(config$n.runs, 1, 100000))
+
+##RENAME!
 s <- system.time(
   {
     .CF.CT$parallel <- "mclapply"

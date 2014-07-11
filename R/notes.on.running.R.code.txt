@@ -1,0 +1,52 @@
+workflow.sh is a shell script that you can use to analyze a genome.
+
+Download latest cubfits.R package which is on git hub.
+
+      $ git clone https://github.com/snoweye/cubfits.git
+
+Install cubfits
+	cd into cubfits folder
+	$ sudo R CMD INSTALL .
+
+	
+Install other packages. This will be done automatically
+	coda, doSNOW, VGAM
+
+Run exemplar script: run_roc.r
+
+
+Developing Figures: 
+	   visualR file
+
+%%%%%%%%%%%%%%%%%%%
+ISSUES
+
+GENERAL
+Explain naming convention somewhere(s)
+Should we suppress messages?
+
+
+Comments with descriptions of functions, input needed, output produced.
+Renaming functions for clarity. Try using sed?
+	 e.g. n.runs -> n.chains
+	      reu13.df -> genome.codon.counts.df? If not what should it be?
+
+
+PACKAGE
+Code stops if it encounters a gene whose nt # is not a multiple of 3. That's okay but a more informative error message could be given.
+
+Needed libraries should be checked at start of code (e.g. VGAM)
+
+Thinning while running.
+
+Verbose option for run details
+Separation of results into different folders.
+
+
+SCRIPTS: run_roc.r
+Exemplar Scripts
+Verbose option for run details
+
+Separation of results into different folders.
+
+Plotting options?
