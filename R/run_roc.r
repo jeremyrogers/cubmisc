@@ -1,3 +1,15 @@
+## check if all packages are installed to run this script
+check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% rownames(installed.packages()), 
+                "VGAM" %in% rownames(installed.packages()), "coda" %in% rownames(installed.packages()),
+                "getopt" %in% rownames(installed.packages()) )#, "Rmpi" %in% rownames(installed.packages()))
+reg.pack <- c("cubfits", "psych", "VGAM", "coda", "getopt") #, "Rmpi")
+if(sum(check.pack) != length(check.pack))
+{
+  cat("missing package(s): ");cat(reg.pack[!check.pack]); cat("\n")
+  stop("Install missing package(s)")
+}
+
+
 suppressMessages(library(cubfits, quietly = TRUE))
 suppressMessages(library(psych, quietly = TRUE))
 ##suppressMessages(library(Rmisc, quietly = TRUE))
@@ -23,14 +35,18 @@ spec = matrix(c(
   'pinit' , 'i', 2, "character" # p matrix initial values
 ), byrow=TRUE, ncol=4);
 
-
+cat("===================================================================================\n")
+cat("================================ START HEADER =====================================\n")
+cat("===================================================================================\n")
 args <- commandArgs(trailingOnly = TRUE)
 cat("Function call:\nRscript run_roc.r ");cat(args);cat("\n\n")
 
 opt <- getopt(spec, args)
 ## print config file to log
 print.config(config)
-
+cat("===================================================================================\n")
+cat("================================= END HEADER ======================================\n")
+cat("===================================================================================\n\n\n")
 
 ##Assigning options to variables
 ##Question: why do they have different names?
@@ -166,13 +182,13 @@ runtime.info <- system.time(
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
                                min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
                                nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
+        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
                                min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, ncores=config$n.cores,
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
                                nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
@@ -181,13 +197,13 @@ runtime.info <- system.time(
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
                                min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
                                nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
+        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
                                min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, 
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
                                nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
@@ -221,7 +237,7 @@ median.phis <- list()
 geo.mean.phis <- list()
 harm.mean.phis <- list()
 sd.phi <- list()
-interval <- (dim(phi.pred[[i]])[2]-config$use.n.iter):dim(phi.pred[[i]])[2]
+interval <- (dim(phi.pred[[i]])[2]-config$use.n.samples):dim(phi.pred[[i]])[2]
 for(i in 1:length(results$chains))
 {
   mean.phis[[i]] <- rowMeans(phi.pred[[i]][, interval]) ### mean of the last X iterations
