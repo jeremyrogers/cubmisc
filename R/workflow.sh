@@ -2,7 +2,7 @@
 
 
 cubmethod="cubappr" # change method
-sdlog="1" # change sdlog 
+sdlog="0.5 1 2 4" # change sdlog 
 genome="../data/ecoli_K12_MG1655_genome_filtered.fasta"
 empphi="../data/ecoli_X_obs.csv"
 prefix="without_xobs_" # change name

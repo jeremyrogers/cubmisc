@@ -1,0 +1,140 @@
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of Iterations: 5000 
+Burn In steps:  
+Min iterations: 2e+05 
+Max iterations: 220000 
+Thin every:  Iterations
+Reset QR until: 400 Iterations
+Thinning: store every 50 iteration
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Iterations used: 3000 
+First 0 removed
+Sequences with less than 0 AA ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.05 
+Use every 1 iteration for convergence test
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-07-14 19:16:20 
+using cubappr 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+5000 
+Gelman score: 5000	1.62100730567858
+10000 
+Gelman score: 10000	1.36195097097119
+15000 
+Gelman score: 15000	1.29662196118936
+20000 
+Gelman score: 20000	1.27077642595413
+25000 
+Gelman score: 25000	1.25386274301948
+30000 
+Gelman score: 30000	1.24306130656041
+35000 
+Gelman score: 35000	1.23648011643977
+40000 
+Gelman score: 40000	1.23104541637056
+45000 
+Gelman score: 45000	1.22744154641356
+50000 
+Gelman score: 50000	1.22519967628017
+55000 
+Gelman score: 55000	1.22323117806361
+60000 
+Gelman score: 60000	1.22108254745146
+65000 
+Gelman score: 65000	1.21933615181761
+70000 
+Gelman score: 70000	1.21792562868325
+75000 
+Gelman score: 75000	1.21683269587854
+80000 
+Gelman score: 80000	1.21601698940912
+85000 
+Gelman score: 85000	1.21491966206961
+90000 
+Gelman score: 90000	1.21410538942891
+95000 
+Gelman score: 95000	1.21316018689636
+1e+05 
+Gelman score: 1e+05	1.21229813525465
+105000 
+Gelman score: 105000	1.2116405402911
+110000 
+Gelman score: 110000	1.21107280066564
+115000 
+Gelman score: 115000	1.21076061008321
+120000 
+Gelman score: 120000	1.21031190473419
+125000 
+Gelman score: 125000	1.20984417483031
+130000 
+Gelman score: 130000	1.20939350881271
+135000 
+Gelman score: 135000	1.20907218191233
+140000 
+Gelman score: 140000	1.20871797151267
+145000 
+Gelman score: 145000	1.20841220645884
+150000 
+Gelman score: 150000	1.2081696635415
+155000 
+Gelman score: 155000	1.20796342457611
+160000 
+Gelman score: 160000	1.20744301322238
+165000 
+Gelman score: 165000	1.20712092019825
+170000 
+Gelman score: 170000	1.2067090094476
+175000 
+Gelman score: 175000	1.20659196853161
+180000 
+Gelman score: 180000	1.20648137095073
+185000 
+Gelman score: 185000	1.20627803669579
+190000 
+Gelman score: 190000	1.20607117733198
+195000 
+Gelman score: 195000	1.2058200823423
+2e+05 
+Gelman score: 2e+05	1.20578557815464
+205000 
+Gelman score: 205000	1.20569674953903
+210000 
+Gelman score: 210000	1.20548124792705
+215000 
+Gelman score: 215000	1.20542450790693
+220000 
+Gelman score: 220000	1.20527257286163
+225000 
+Gelman score: 225000	1.20512564047608
+Elapsed time for 4 chains on 4 cores was 603.39 min
+process results...
+saving results...
+finished at: 2014-07-15 05:26:38 
+Error: unexpected ',' in " Sys.time(),"
+Execution halted
