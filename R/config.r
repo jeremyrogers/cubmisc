@@ -39,7 +39,7 @@ print.config <- function(config)
 
 config <- list(
   n.iter  = 5000,  # steps after burn.in between convergence checks.
-  use.n.iter = 3000, #window for convergence test (multichain) and window to calculate mean phi. IMPORTANT: Make sure this one is smaller than the thined chain, otherwise saving will crash!
+  use.n.iter = 1000, #window for convergence test (multichain) and window to calculate mean phi. IMPORTANT: Make sure this one is smaller than the thined chain, otherwise saving will crash!
   n.chains = 4, # num chains
   n.cores = 4, # total num of cpu cores (should be about 5*n.chains when using parallel method other then "lapply")
   selected.env = 1, # deprecated (us if more than one dataset is stored in csv, e.g. different conditions)
