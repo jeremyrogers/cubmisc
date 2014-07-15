@@ -8,10 +8,11 @@ empphi="../data/ecoli_X_obs.csv"
 prefix="without_xobs_" # change name
 suffix="multichain_lapply_4cores"
 folder="../results/conv_test/" # change folder
-pinit="woxobs_pinit.csv" # make sure correct file is loaded (with X obs, w/o X obs)
+pinit="woxobs_pinit.csv" # file with initial values for multiple parameters such as Ax, s_phi^{(0)}, s_\varepsilon
+                ##NOTE: With and without Xobs fits use different files.
 
 if [ ! -d "$folder" ]; then
-  mkdir $folder
+  mkdir -p $folder
 fi
 
 foutname="$prefix$suffix"
@@ -22,7 +23,7 @@ if [ "$cubmethod" = "cubfits" ]; then
 	nohup Rscript run_roc.r -c $cubmethod -s "0.5 1 2 4" -f $genome -p $empphi -o $folder -n $foutname -i $pinit >> $logfile &
 fi
 if [ "$cubmethod" = "cubappr" ]; then
-	if [ "$sdlog" = "0" ]; then 
+	if [ "$sdlog" = "0" ]; then #double check that sdlog value is properly defined
 		echo "sdog is 0, execution stopped! \n" 
 		exit 1 
 	fi
