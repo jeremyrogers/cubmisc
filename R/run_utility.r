@@ -1,27 +1,3 @@
-## set mean of dataset to 1
-normalize.data.set <- function(data)
-{
-  data <- data/mean(data)
-}
-
-
-# get.init.phi <- function(use.scuo=T, fn.phi.in, seq.string, aa.names, sdlog=0.5, randomize=T)
-# {
-#   scuo <- 0
-#   if(use.scuo)
-#   {
-#     scuo <- get.scuo(genome=seq.string, aa.names=aa.names, randomize=T, sdlog=sdlog) 
-#   }else{
-#     estim.phi <- read.csv(fn.phi.in)
-#     names <- estim.phi[, 1]
-#     estim.phi <- estim.phi[, config$selected.env + 1]
-#     names(estim.phi) <- names
-#     scuo <- normalize.data.set(estim.phi)
-#   }
-#   return(scuo)
-# }
-
-
 get.logL <- function(ret, data, model="roc")
 {
   require(multicore)
@@ -60,25 +36,6 @@ get.logL <- function(ret, data, model="roc")
   }
 }
 
-# reading.genome <- function(fn.genome, ex.sh.aa=-1)
-# {
-#   cat("reading sequences...\n")
-#   seq.data <- read.seq(fn.genome)
-#   ind <- unlist(lapply(1:length(seq.data), function(i)
-#           {
-#             return(length(seq.data[[i]]) > (ex.sh.aa*3))
-#           }))
-#   seq.data <- seq.data[ind]
-#   
-#   cat("converting sequences...\n")
-#   seq.string <- convert.seq.data.to.string(seq.data)
-#   seq.string <- seq.string[order(names(seq.string))]
-#   
-#   return(seq.string)
-# }
-
-## RENAME: Reads in Xobs data and compares it to ORFs in FASTA!
-## 
 read.empirical.data <- function(fn, genome, env, th=-1)
 {
   ## load empirical data
@@ -100,24 +57,9 @@ generate.data <- function(genome, aa.names)
 {
   ## generate data set
   phi <- data.frame(names(genome), rlnorm(length(genome), 0, 1))
-  cat("generating codon counts and corresponding reu13.df")
   reu13.df <- gen.reu13.df(genome, phi, aa.names)
   
   y <- gen.y(genome, aa.names)
   n <- gen.n(genome, aa.names)
   return(list(reu13.df=reu13.df, y=y, n=n))
 }
-
-# get.scuo <- function(genome, aa.names, randomize=F, sdlog=1.5)
-# {
-#   scuo <- gen.scuo(genome, aa.names)
-#   scuo <- calc_scuo_values(scuo)$SCUO
-#   if(randomize)
-#   {
-#     scuo <- scuo.random(scuo, meanlog = -sdlog^2 / 2,
-#                         sdlog = sdlog)  
-#   }
-#   scuo <- scuo / mean(scuo)
-#   names(scuo) <- names(genome)
-#   return(scuo)
-# }

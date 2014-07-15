@@ -13,16 +13,20 @@ source("config.r")
 # using getopt library
 
 ##define matrix for options and flags that are passed to "Rscript run_roc.r ..." command 
-spec <- matrix(c(
-  'cubmethod', 'c', 2, "character",
-  'fnin' , 'f', 1, "character",
-  'fnpin' , 'p', 2, "character",
-  'fnout' , 'o', 1, "character",
-  'sdlog' , 's', 2, "character"
+spec = matrix(c(
+  'sdlog' , 's', 2, "character", # one or more sd logs
+  'cubmethod', 'c', 2, "character", # cub method to use
+  'fnin' , 'f', 1, "character", # genome (fasta)
+  'fnpin' , 'p', 2, "character", # x obs
+  'fnout' , 'o', 1, "character", # output folder
+  'fname' , 'n', 1, "character", # filename
+  'pinit' , 'i', 2, "character" # p matrix initial values
 ), byrow=TRUE, ncol=4);
 
 
 args <- commandArgs(trailingOnly = TRUE)
+cat("Function call:\nRscript run_roc.r ");cat(args);cat("\n\n")
+
 opt <- getopt(spec, args)
 ## print config file to log
 print.config(config)
@@ -30,18 +34,38 @@ print.config(config)
 
 ##Assigning options to variables
 ##Question: why do they have different names?
-
+debug.code <- FALSE
 if(debug.code){
   ## hard coded variables to be used when debugging.
   ## to be removed later?
-  
+  cat("Script running in debug mode!\n")
   ## I/O variables
-  sdlog.phi.init <- 5 # has to be non 0 for cubappr
+  
+  sdlog.phi.init <- c(1,2,3,4) # has to be non 0 for cubappr
   fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
   fn.phi.in <- "../data/ecoli_X_obs.csv"
-  fn.phi.out <- "../results/test/test.phi"
-  fn.out <- "../results/test/test.dat"
+  fname <- "test"
+  out.folder <- "../results/test/"
+  fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+  fn.out <- paste(out.folder, fname, ".dat", sep="")
   cubmethods <- "cubappr"
+  
+  ##Hard coding of initial values for pMat of each chain
+  ## c(sd_epsilon, meanlog(phi), sdlog(phi), K_x scaling constant)
+  p.init <- list(NULL)
+  length(p.init) <- config$n.chains
+  if(cubmethods == "cubfits"){
+    p.init[[1]] <- c(0.1, -0.125, 0.5, 1.0)
+    p.init[[2]] <- c(0.5, -0.5, 1.0, 7.0)
+    p.init[[3]] <- c(1.5, -2.0, 2.0, 5.0)
+    p.init[[4]] <- c(1.0, -8.0, 4.0, 10.0)
+  } else if(cubmethods == "cubappr") {
+    p.init[[1]] <- c(-0.125, 0.5)
+    p.init[[2]] <- c(-0.5, 1.0)
+    p.init[[3]] <- c(-2.0, 2.0)
+    p.init[[4]] <- c(-8.0, 4.0)
+  }  
+  
 }else{    
   sdlog.phi.init <- opt$sdlog
   sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
@@ -50,21 +74,28 @@ if(debug.code){
   cubmethods <- opt$cubmethod
   fn.in <- opt$fnin
   fn.phi.in <- opt$fnpin
-  fn.phi.out <- paste(opt$fnout, ".phi", sep="")
-  fn.out <- paste(opt$fnout, ".dat", sep="")
+  fname <- opt$fname
+  out.folder <- opt$fnout
+  fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+  fn.out <- paste(out.folder, fname, ".dat", sep="")
+  
+  if(!is.null(opt$pinit))
+  {
+    p.init <- as.list(read.table(opt$pinit, header=F, sep=","))
+  }else{ # start from default, no initial values set
+    p.init <- list(NULL)
+    length(p.init) <- config$n.chains
+  }
+  
+  
 }
 
-cat(paste("starting time:", Sys.time(), "\n"))
+cat(paste("started at:", Sys.time(), "\n"))
 cat(paste("using", cubmethods, "\n"))
 
-
-
-## cat vs. print?  Print to file?
 cat(paste("reading sequences from file", fn.in, "\n"))
 ## readGenome function in cubfits package
 seq.string <- readGenome(fn.in, config$rm.short, config$rm.first.aa)
-
-
 
 
 ## if using Xobs data 
@@ -84,8 +115,7 @@ if(cubmethods == "cubfits")
   }
 }
 
-## MORE DETAILS!!!
-cat("generating other data...\n")
+cat("generating list of codon position in ORFs for each AA...\ngenerating list of number of AA occurences per ORF...\ngenerating list of codon counts per ORF...\n")
 data <- generate.data(seq.string, config$aa)
 
 
@@ -100,8 +130,8 @@ if(config$use.scuo)
   scuo <- calc_scuo_values(scuo)$SCUO
   for(i in 1:config$n.chains)
   {
-    cat( paste("\t", sdlog.phi.init[i],"\n") )
-    randscuo <- scuo.random(scuo, meanlog = -sdlog.phi.init[i]^2 / 2, sdlog = sdlog.phi.init[i])
+    cat( paste("\t-", sdlog.phi.init[i],"\n") )
+    randscuo <- scuo.random(scuo, meanlog = -sdlog.phi.init[i]^2.0 / 2.0, sdlog = sdlog.phi.init[i])
     randscuo <- randscuo / mean(randscuo)
     names(randscuo) <- names(seq.string)
     init.phi[[i]] <- randscuo
@@ -122,69 +152,52 @@ if(config$use.scuo)
 ##define objects to hold initial values and output from MCMC chains
 results <- list()
 length(results) <- config$n.chains
-p.init <- list(NULL)
-length(p.init) <- config$n.chains
 
-##Hard coding of initial values for pMat of each chain
-## c(sd_epsilon, meanlog(phi), sdlog(phi), K_x scaling constant)
-if(cubmethods == "cubfits"){
-  p.init[[1]] <- c(0.5, -0.5, 1, 7)
-  p.init[[2]] <- c(0.1, -0.03125, 0.25, 1)
-  p.init[[3]] <- c(1.5, -2.0, 2, 5)
-  p.init[[4]] <- c(1.0, -4.5, 3, 10)
-} else if(cubmethods == "cubappr") {
-  p.init[[1]] <- c(-0.5, 1)
-  p.init[[2]] <- c(-0.03125, 0.25)
-  p.init[[3]] <- c(-2.0, 2)
-  p.init[[4]] <- c(-4.5, 3)
-}
-
-##Change to reflect single chain possibility
-cat(paste("running ", cubmethods, " using multiple chains \n"))
+funct <- ifelse(config$n.chains > 1, "cubmultichain", "cubsinglechain") 
+cat(paste("running", cubmethods, "using", funct, "\n"))
 seeds <- round(runif(config$n.chains, 1, 100000))
 
-##RENAME!
-s <- system.time(
+runtime.info <- system.time(
   {
-    .CF.CT$parallel <- "mclapply"
+    .CF.CT$parallel <- config$parallel
     if(cubmethods == "cubfits"){
       .CF.CT$type.p <- "lognormal_bias"
       .CF.CONF$scale.phi.Obs <- F
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=0.1, frac2=0.5, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, thin=config$thin, eps=1, 
+        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
-                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init[[1]],
+                               nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
         results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, thin=config$thin, eps=0.05, ncores=config$n.cores,
+                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, ncores=config$n.cores,
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
-                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
+                               nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=0.1, frac2=0.5, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, thin=config$thin, eps=1, 
+        results <- cubsinglechain(cubmethods, niter=config$use.n.iter, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+                               min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
-                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init[[1]],
+                               nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
         results <- cubmultichain(cubmethods, niter=config$use.n.iter, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, thin=config$thin, eps=0.05, 
+                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, 
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
-                               nIter=config$n.iter, burnin=config$burn.in, p.Init=p.init,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)        
+                               nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }
   }
 ) 
 
-cat(paste("Elapsed time for", config$n.chains, "runs on", config$n.cores, "cores was", round(s["elapsed"]/60, digits=2), "min\n" ))
+cat(paste("Elapsed time for", config$n.chains, "chains doing", config$n.iter, "iterations on", config$n.cores, "cores was", round(runtime.info["elapsed"]/60, digits=2), "min\n" ))
 seq.string.names <- names(seq.string)
 rm("seq.string")
 
@@ -211,11 +224,11 @@ sd.phi <- list()
 interval <- (dim(phi.pred[[i]])[2]-config$use.n.iter):dim(phi.pred[[i]])[2]
 for(i in 1:length(results$chains))
 {
-  mean.phis[[i]] <- rowMeans(phi.pred[[i]][, interval]) ### mean of the last 2000 iterations
+  mean.phis[[i]] <- rowMeans(phi.pred[[i]][, interval]) ### mean of the last X iterations
   median.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, median)
   geo.mean.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, geometric.mean)
   harm.mean.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, harmonic.mean)
-  sd.phi[[i]] <- apply(phi.pred[[i]][, seq(interval[1], interval[length(interval)], by=config$use.n.iter/10)], 1, sd)
+  sd.phi[[i]] <- apply(phi.pred[[i]][, interval], 1, sd)
 }
 ## save results and input
 cat("saving results...\n")
@@ -227,6 +240,13 @@ sd.phi <- do.call("cbind", sd.phi)
 
 if(config$n.chains > 1) # only need that if there is more than one run
 {
+  for(i in 1:length(results$chains))
+  {
+    dir.create(file.path(paste(out.folder, "chain_", i, sep="")), showWarnings = FALSE)
+    means <- cbind(seq.string.names, mean.phis[,i], median.phis[,i], geo.mean.phis[,i], harm.mean.phis[,i], sd.phi[,i])
+    colnames(means) <- c("ORF_Info", "Phi_Post_Arith_Mean", "Phi_Post_Median", "Phi_Post_Geom_Mean", "Phi_Post_Harm_Mean", "Phi_Post_SD") 
+    write.csv(means, file = paste(out.folder, "chain_", i, "/", fname, ".phi", sep=""), row.names=F, quote=F)
+  } 
   mean.phis <- rowMeans(mean.phis)
   median.phis <- apply(median.phis, 1, median)
   geo.mean.phis <- apply(geo.mean.phis, 1, geometric.mean)
@@ -235,15 +255,16 @@ if(config$n.chains > 1) # only need that if there is more than one run
 }
 means <- cbind(seq.string.names, mean.phis, median.phis, geo.mean.phis, harm.mean.phis, sd.phi)
 colnames(means) <- c("ORF_Info", "Phi_Post_Arith_Mean", "Phi_Post_Median", "Phi_Post_Geom_Mean", "Phi_Post_Harm_Mean", "Phi_Post_SD") 
-write.csv(means, file = fn.phi.out, row.names=F)
+write.csv(means, file = fn.phi.out, row.names=F, quote=F)
 #write.table(means, file = fn.phi.out)
 
 for(i in 1:config$n.chains)
 {
   chain <- results$chains[[i]]
   convergence <- results$convergence
-  list.save <- c("data", "mean.phis", "seeds", "chain", "seq.string.names", "config", "means", "sdlog", "convergence")
-  save(list = list.save, file = paste(fn.out, "_chain_", i, sep=""))
+  list.save <- c("data", "mean.phis", "seeds", "chain", "seq.string.names", "config", "means", "sdlog.phi.init", "convergence")
+  save(list = list.save, file = paste(out.folder, "chain_", i, "/", fname, ".dat", sep=""))
   
 }
+cat(paste("finished at:", Sys.time(), "\n"))
 rm("phi.pred")

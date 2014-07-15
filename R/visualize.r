@@ -1,5 +1,3 @@
-##NOTES
-
 suppressMessages(library(cubfits, quietly = TRUE))
 setwd("~/CodonUsageBias/ecoli/R")
 source("visualize_utility.r")
@@ -9,7 +7,7 @@ source("config.r")
 my.function <- init.function(model = 'roc', model.Phi = 'lognormal',
                                 adaptive = 'simple')
 
-result.folder <- "../results/test/"
+result.folder <- "../results/conv_test/chain_1/"
 niter <- "multichain_1"
 prefix <- "w_o"
 
@@ -17,11 +15,11 @@ prefix <- "w_o"
 #data.set <- load.data.file(paste(result.folder, prefix, "_xobs_", niter, ".dat", sep=""))
 #estm.phi <- read.csv(paste(result.folder, prefix, "_xobs_", niter, ".phi", sep=""))
 #data.set <- load.data.file("../results/rm_first_50_aa/without_xobs_multichain.dat")
-load(paste(result.folder, "without_xobs_multichain_thin_10.dat_chain_1", sep=""))
-estm.phi <- read.csv(paste(result.folder, "without_xobs_multichain_thin_10.phi", sep=""))
+load(paste(result.folder, "without_xobs_multichain_lapply_4cores.dat", sep=""))
+estm.phi <- read.csv(paste(result.folder, "without_xobs_multichain_lapply_4cores.phi", sep=""))
 
 
-seq.string <- readGenome("../data/ecoli_K12_MG1655_genome_filtered.fasta", 150, 50)
+seq.string <- readGenome("../data/ecoli_K12_MG1655_genome_filtered.fasta", config$rm.short, config$rm.first.aa)
 emp <- read.empirical.data("../data/ecoli_X_obs.csv", seq.string, config$selected.env, th=0)
 #seq.string <- emp$genome
 emp <- emp$empirical[names(emp$empirical) %in% estm.phi[, 1]]
@@ -120,6 +118,17 @@ dev.off()
 
 
 
+
+plot(convergence, xlab="Iteration", ylab="Gelman Score")
+data <- as.data.frame(convergence)
+data <- list(x=data[,1], y=data[,2])
+model <- nls(y ~ 1.213+exp(c + d * x), data = data, start = list(c = 0, d = 0))
+
+
+iter <- seq(1, max(convergence[,1]))
+pred.score <- (predict(model, list(x=iter)))
+plot(data$x, data$y, xlab="Iteration", ylab="Gelman Score")
+lines(iter, pred.score, type="l")
 
 
 plot.w.phi.vs.wo.phi(res.w.phi, res.wo.phi))

@@ -101,56 +101,57 @@
 # }
 
 
+plotTraces <- function(ret.b.Mat, names.aa, param = c("logmu", "deltat"), main="AA parameter trace")
+{
+  b.mat <- convert.bVec.to.b(ret.b.Mat[[1]], names.aa)
+  b.mat <- convert.b.to.bVec(b.mat)
+  names.b <- names(b.mat)
+  id.intercept <- grep("Intercept", names.b)
+  id.slope <- 1:length(names.b)
+  id.slope <- id.slope[-id.intercept]
+  
+  
+  id.plot <- rep(0, length(names.b))
+  if(param[1] == "logmu"){
+    ylab <- expression(paste("log ( ", mu, " )"))
+    id.plot[id.intercept] <- id.intercept
+  } else if(param[1] == "deltat"){
+    ylab <- expression(paste(Delta, "t"))
+    id.plot[id.slope] <- id.slope
+  }  
+  
+  x <- 1:length(ret.b.Mat)
+  xlim <- range(x)
+  
+  ### Trace plot.
+  nf <- layout(matrix(c(rep(1, 5), 2:21), nrow = 5, ncol = 5, byrow = TRUE),
+               rep(1, 5), c(2, 8, 8, 8, 8), respect = FALSE)
+  ### Plot title.
+  par(mar = c(0, 0, 0, 0))
+  plot(NULL, NULL, xlim = c(0, 1), ylim = c(0, 1), axes = FALSE)
+  text(0.5, 0.6, main)
+  text(0.5, 0.4, date(), cex = 0.6)
+  par(mar = c(5.1, 4.1, 4.1, 2.1))
+  
+  ### Plot by aa.
+  for(i.aa in names.aa){
+    id.tmp <- grepl(i.aa, names.b) & id.plot
+    trace <- lapply(1:length(ret.b.Mat), function(i){ ret.b.Mat[[i]][id.tmp] })
+    trace <- do.call("rbind", trace)
+    if(length(trace) == 0) next
+    
+    ylim <- range(trace, na.rm=T)
+    plot(NULL, NULL, xlim = xlim, ylim = ylim,
+         xlab = "Iterations", ylab = ylab, main = i.aa)
+    plot.order <- order(apply(trace, 2, sd), decreasing = TRUE)
+    for(i.codon in plot.order){
+      lines(x = x, y = trace[, i.codon], col = .CF.PT$color[i.codon])
+    } 
+  }
+}
 
 
-# plot.traces <- function(ret.b.Mat, names.aa, param = c("logmu", "deltat"), main="AA parameter trace")
-# {
-#   b.mat <- convert.bVec.to.b(ret.b.Mat[[1]], names.aa)
-#   b.mat <- convert.b.to.bVec(b.mat)
-#   names.b <- names(b.mat)
-#   id.intercept <- grep("Intercept", names.b)
-#   id.slope <- 1:length(names.b)
-#   id.slope <- id.slope[-id.intercept]
-#   
-#   
-#   id.plot <- rep(0, length(names.b))
-#   if(param[1] == "logmu"){
-#     ylab <- expression(paste("log ( ", mu, " )"))
-#     id.plot[id.intercept] <- id.intercept
-#   } else if(param[1] == "deltat"){
-#     ylab <- expression(paste(Delta, "t"))
-#     id.plot[id.slope] <- id.slope
-#   }  
-# 
-#   x <- 1:length(ret.b.Mat)
-#   xlim <- range(x)
-#   
-#   ### Trace plot.
-#   nf <- layout(matrix(c(rep(1, 5), 2:21), nrow = 5, ncol = 5, byrow = TRUE),
-#                rep(1, 5), c(2, 8, 8, 8, 8), respect = FALSE)
-#   ### Plot title.
-#   par(mar = c(0, 0, 0, 0))
-#   plot(NULL, NULL, xlim = c(0, 1), ylim = c(0, 1), axes = FALSE)
-#   text(0.5, 0.6, main)
-#   text(0.5, 0.4, date(), cex = 0.6)
-#   par(mar = c(5.1, 4.1, 4.1, 2.1))
-#   
-#   ### Plot by aa.
-#   for(i.aa in names.aa){
-#     id.tmp <- grepl(i.aa, names.b) & id.plot
-#     trace <- lapply(1:length(ret.b.Mat), function(i){ ret.b.Mat[[i]][id.tmp] })
-#     trace <- do.call("rbind", trace)
-#     if(length(trace) == 0) next
-#     
-#     ylim <- range(trace, na.rm=T)
-#     plot(NULL, NULL, xlim = xlim, ylim = ylim,
-#          xlab = "Iterations", ylab = ylab, main = i.aa)
-#     plot.order <- order(apply(trace, 2, sd), decreasing = TRUE)
-#     for(i.codon in plot.order){
-#       lines(x = x, y = trace[, i.codon], col = .CF.PT$color[i.codon])
-#     } 
-#   }
-# }
+
 
 load.data.file <- function(fn)
 {
