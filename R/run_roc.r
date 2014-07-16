@@ -5,7 +5,7 @@ check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% row
 reg.pack <- c("cubfits", "psych", "VGAM", "coda", "getopt") #, "Rmpi")
 if(sum(check.pack) != length(check.pack))
 {
-  cat("missing package(s): ");cat(reg.pack[!check.pack]); cat("\n")
+  cat("Missing package(s): ");cat(reg.pack[!check.pack]); cat("\n")
   stop("Install missing package(s)")
 }
 
@@ -172,7 +172,7 @@ length(results) <- config$n.chains
 funct <- ifelse(config$n.chains > 1, "cubmultichain", "cubsinglechain") 
 cat(paste("running", cubmethods, "using", funct, "\n"))
 seeds <- round(runif(config$n.chains, 1, 100000))
-
+cat("\t with seeds");cat(seeds);cat("\n")
 runtime.info <- system.time(
   {
     .CF.CT$parallel <- config$parallel
@@ -182,14 +182,16 @@ runtime.info <- system.time(
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds, teston="sphi", 
                                min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
                                nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, ncores=config$n.cores,
+        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+                               swap=config$swap, swapAt=config$swapAt, min=config$min.iter, max=config$max.iter, 
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, ncores=config$n.cores,
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
                                nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
@@ -197,14 +199,16 @@ runtime.info <- system.time(
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, reset.qr=config$reset.qr, seed=seeds, teston="sphi",
+        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds, teston="sphi", 
                                min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
                                nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi",
-                               min=config$min.iter, max=config$max.iter, nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, 
+        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+                               swap=config$swap, swapAt=config$swapAt, min=config$min.iter, max=config$max.iter, 
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, 
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
                                nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
