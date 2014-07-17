@@ -2,10 +2,10 @@
 check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% rownames(installed.packages()), 
                 "VGAM" %in% rownames(installed.packages()), "coda" %in% rownames(installed.packages()),
                 "getopt" %in% rownames(installed.packages()) )#, "Rmpi" %in% rownames(installed.packages()))
-reg.pack <- c("cubfits", "psych", "VGAM", "coda", "getopt") #, "Rmpi")
+requ.pack <- c("cubfits", "psych", "VGAM", "coda", "getopt") #, "Rmpi")
 if(sum(check.pack) != length(check.pack))
 {
-  cat("Missing package(s): ");cat(reg.pack[!check.pack]); cat("\n")
+  cat("Missing package(s): ");cat(requ.pack[!check.pack]); cat("\n")
   stop("Install missing package(s)")
 }
 
@@ -54,10 +54,12 @@ debug.code <- FALSE
 if(debug.code){
   ## hard coded variables to be used when debugging.
   ## to be removed later?
-  cat("Script running in debug mode!\n")
+  cat("=================== WARNING ===================\n")
+  cat("======== Script running in debug mode! ========\n")
+  cat("===============================================\n")
   ## I/O variables
   
-  sdlog.phi.init <- c(1,2,3,4) # has to be non 0 for cubappr
+  sdlog.phi.init <- c(0.5,1,2,4) # has to be non 0 for cubappr
   fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
   fn.phi.in <- "../data/ecoli_X_obs.csv"
   fname <- "test"
@@ -81,7 +83,6 @@ if(debug.code){
     p.init[[3]] <- c(-2.0, 2.0)
     p.init[[4]] <- c(-8.0, 4.0)
   }  
-  
 }else{    
   sdlog.phi.init <- opt$sdlog
   sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
@@ -102,8 +103,6 @@ if(debug.code){
     p.init <- list(NULL)
     length(p.init) <- config$n.chains
   }
-  
-  
 }
 
 cat(paste("started at:", Sys.time(), "\n"))
@@ -172,7 +171,7 @@ length(results) <- config$n.chains
 funct <- ifelse(config$n.chains > 1, "cubmultichain", "cubsinglechain") 
 cat(paste("running", cubmethods, "using", funct, "\n"))
 seeds <- round(runif(config$n.chains, 1, 100000))
-cat("\t with seeds");cat(seeds);cat("\n")
+cat("\t with seeds: ");cat(seeds);cat("\n")
 runtime.info <- system.time(
   {
     .CF.CT$parallel <- config$parallel
@@ -226,14 +225,29 @@ rm("seq.string")
 ## process results
 cat("process results...\n")
 phi.pred <- list()
-for(i in 1:length(results$chains))
+length(phi.pred) <- config$n.chains
+b.mat <- list()
+length(b.mat) <- config$n.chains
+if(config$n.chains > 1)
 {
+  for(i in 1:config$n.chains)
+  {
+    if(cubmethods == "cubfits"){
+      phi.pred[[i]] <- do.call("cbind", results$chains[[i]]$phi.Mat)### matrix n.G by nIter+1
+    }
+    if(cubmethods == "cubappr") {
+      phi.pred[[i]] <- do.call("cbind", results$chains[[i]]$phi.pred.Mat) ### matrix n.G by nIter+1
+    }
+    b.mat[[i]] <- do.call("cbind", results$chains[[i]]$b.Mat) ### matrix n.G by nIter+1
+  }
+}else{
   if(cubmethods == "cubfits"){
-    phi.pred[[i]] <- do.call("cbind", results$chains[[i]]$phi.Mat) ### matrix n.G by nIter+1
+    phi.pred[[1]] <- do.call("cbind", results$chains$phi.Mat)### matrix n.G by nIter+1
   }
   if(cubmethods == "cubappr") {
-    phi.pred[[i]] <- do.call("cbind", results$chains[[i]]$phi.pred.Mat) ### matrix n.G by nIter+1
+    phi.pred[[1]] <- do.call("cbind", results$chains$phi.pred.Mat) ### matrix n.G by nIter+1
   }
+  b.mat[[1]] <- do.call("cbind", results$chains$b.Mat) ### matrix n.G by nIter+1  
 }
 
 mean.phis <- list()
@@ -241,14 +255,18 @@ median.phis <- list()
 geo.mean.phis <- list()
 harm.mean.phis <- list()
 sd.phi <- list()
+mean.b.mat <- list()
+sd.b.mat <- list()
 interval <- (dim(phi.pred[[i]])[2]-config$use.n.samples):dim(phi.pred[[i]])[2]
-for(i in 1:length(results$chains))
+for(i in 1:config$n.chains)
 {
   mean.phis[[i]] <- rowMeans(phi.pred[[i]][, interval]) ### mean of the last X iterations
   median.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, median)
   geo.mean.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, geometric.mean)
   harm.mean.phis[[i]] <- apply(phi.pred[[i]][, interval], 1, harmonic.mean)
   sd.phi[[i]] <- apply(phi.pred[[i]][, interval], 1, sd)
+  mean.b.mat[[i]] <- rowMeans(b.mat[[i]][, interval])
+  sd.b.mat[[i]] <- apply(b.mat[[i]][, interval], 1, sd)
 }
 ## save results and input
 cat("saving results...\n")
@@ -257,7 +275,10 @@ median.phis <- do.call("cbind", median.phis)
 geo.mean.phis <- do.call("cbind", geo.mean.phis)
 harm.mean.phis <- do.call("cbind", harm.mean.phis)
 sd.phi <- do.call("cbind", sd.phi)
+mean.b.mat <- do.call("cbind", mean.b.mat)
+sd.b.mat <- do.call("cbind", sd.b.mat)
 
+bmat.names <- mapBMatNames(rownames(mean.b.mat), config$aa)
 if(config$n.chains > 1) # only need that if there is more than one run
 {
   for(i in 1:length(results$chains))
@@ -266,25 +287,41 @@ if(config$n.chains > 1) # only need that if there is more than one run
     means <- cbind(seq.string.names, mean.phis[,i], median.phis[,i], geo.mean.phis[,i], harm.mean.phis[,i], sd.phi[,i])
     colnames(means) <- c("ORF_Info", "Phi_Post_Arith_Mean", "Phi_Post_Median", "Phi_Post_Geom_Mean", "Phi_Post_Harm_Mean", "Phi_Post_SD") 
     write.csv(means, file = paste(out.folder, "chain_", i, "/", fname, ".phi", sep=""), row.names=F, quote=F)
+    
+    mean.b <- cbind(bmat.names, mean.b.mat[,i], sd.b.mat[,1])
+    colnames(mean.b) <- c("Parameter", "Value", "SD")
+    write.csv(mean.b, file = paste(out.folder, "chain_", i, "/", fname, ".bmat", sep=""), row.names=F, quote=F)
   } 
   mean.phis <- rowMeans(mean.phis)
   median.phis <- apply(median.phis, 1, median)
   geo.mean.phis <- apply(geo.mean.phis, 1, geometric.mean)
   harm.mean.phis <- apply(harm.mean.phis, 1, harmonic.mean)
+  mean.b.mat <- rowMeans(mean.b.mat)
+  sd.b.mat <- rowMeans(sd.b.mat)
   sd.phi <- rowMeans(sd.phi)
 }
 means <- cbind(seq.string.names, mean.phis, median.phis, geo.mean.phis, harm.mean.phis, sd.phi)
 colnames(means) <- c("ORF_Info", "Phi_Post_Arith_Mean", "Phi_Post_Median", "Phi_Post_Geom_Mean", "Phi_Post_Harm_Mean", "Phi_Post_SD") 
 write.csv(means, file = fn.phi.out, row.names=F, quote=F)
-#write.table(means, file = fn.phi.out)
 
-for(i in 1:config$n.chains)
+mean.b.mat <- cbind(bmat.names, mean.b.mat, sd.b.mat)
+colnames(mean.b.mat) <- c("Parameter", "Value", "SD")
+write.csv(mean.b.mat, file = paste(out.folder, fname, ".bmat", sep=""), row.names=F, quote=F)
+
+if(config$n.chains > 1)
 {
-  chain <- results$chains[[i]]
+  for(i in 1:config$n.chains)
+  {
+    chain <- results$chains[[i]]
+    convergence <- results$convergence
+    list.save <- c("data", "mean.phis", "seeds", "chain", "seq.string.names", "config", "means", "sdlog.phi.init", "convergence")    
+    save(list = list.save, file = paste(out.folder, "chain_", i, "/", fname, ".dat", sep=""))
+  }
+}else{
+  chain <- results$chains
   convergence <- results$convergence
-  list.save <- c("data", "mean.phis", "seeds", "chain", "seq.string.names", "config", "means", "sdlog.phi.init", "convergence")
-  save(list = list.save, file = paste(out.folder, "chain_", i, "/", fname, ".dat", sep=""))
-  
+  list.save <- c("data", "mean.phis", "seeds", "chain", "seq.string.names", "config", "means", "sdlog.phi.init", "convergence")    
+  save(list = list.save, file = paste(out.folder, fname, ".dat", sep=""))
 }
 cat(paste("finished at:", Sys.time(), "\n"))
 rm("phi.pred")
