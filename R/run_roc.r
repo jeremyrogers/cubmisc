@@ -175,41 +175,43 @@ cat("\t with seeds: ");cat(seeds);cat("\n")
 runtime.info <- system.time(
   {
     .CF.CT$parallel <- config$parallel
+    iterations <- config$n.samples*config$chain.thin # between convergence checks
     if(cubmethods == "cubfits"){
       .CF.CT$type.p <- "lognormal_bias"
       .CF.CONF$scale.phi.Obs <- F
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
-                               reset.qr=config$reset.qr, seed=seeds, teston="sphi", 
-                               min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
+        results <- cubsinglechain(cubmethods, nsamples=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi", growthfactor=config$gf, 
+                               min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
-                               nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
+                               nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
-                               swap=config$swap, swapAt=config$swapAt, min=config$min.iter, max=config$max.iter, 
-                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, ncores=config$n.cores,
-                               reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
-                               nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
+        results <- cubmultichain(cubmethods, nsamples=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+                               swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,  growthfactor=config$gf, 
+                               ncores=config$n.cores, reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
+                               nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, niter=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
-                               reset.qr=config$reset.qr, seed=seeds, teston="sphi", 
-                               min=config$min.iter, max=config$max.iter, conv.thin=config$conv.thin, eps=config$eps, 
+        results <- cubsinglechain(cubmethods, nsamples=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi", growthfactor=config$gf,
+                               min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
-                               nIter=config$n.iter, p.Init=p.init[[1]], iterThin=config$chain.thin,
+                               nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, niter=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
-                               swap=config$swap, swapAt=config$swapAt, min=config$min.iter, max=config$max.iter, 
-                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, 
+        results <- cubmultichain(cubmethods, nsamples=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+                               swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, growthfactor=config$gf,
+                               #monitor=function(x, i){cat(paste("I am monitor for chain", i, "\n"))},
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
-                               nIter=config$n.iter, p.Init=p.init, iterThin=config$chain.thin,
+                               nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }

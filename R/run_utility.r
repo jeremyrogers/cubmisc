@@ -1,3 +1,27 @@
+
+mapBMatNames <- function(in.names, aa.names)
+{
+  codon.count <- list(A=3, R=5, N=1, D=1, C=1, Q=1, E=1, G=3, H=1, I=2, L=5, K=1, F=1, P=3, S=3, Z=1, T=3, Y=1, V=3, M=0, W=0)
+  id.intercept <- grep("Intercept", in.names)
+  id.slope <- 1:length(in.names)
+  id.slope <- id.slope[-id.intercept]
+  
+  out.names <- vector(mode = "character", length=length(in.names))
+  start <- 1
+  for(aa in aa.names)
+  {
+    ncodons <- codon.count[[aa]]*2
+    if(ncodons == 0) next # for M and W
+    out.names[start:(start+ncodons-1)] <- rep(aa, ncodons)
+    start <- start + ncodons
+  }
+  out.names[id.intercept] <- paste(out.names[id.intercept], "log(mu)")
+  out.names[id.slope] <- paste(out.names[id.slope], "delta_t")
+  return(out.names)
+}
+
+
+
 get.logL <- function(ret, data, model="roc")
 {
   require(multicore)
