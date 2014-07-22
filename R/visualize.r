@@ -7,13 +7,14 @@ source("config.r")
 my.function <- init.function(model = 'roc', model.Phi = 'lognormal',
                                 adaptive = 'simple')
 
-result.folder <- "../results/conv_test/chain_1/"
-niter <- "multichain_1"
+chainnumber <- 3
+result.folder <- paste("../results/conv_test_noadjustments/chain_", chainnumber, "/", sep="")
+suffix <- paste("multichain_", chainnumber, sep="")
 prefix <- "w_o"
 
 #### read data
-#data.set <- load.data.file(paste(result.folder, prefix, "_xobs_", niter, ".dat", sep=""))
-#estm.phi <- read.csv(paste(result.folder, prefix, "_xobs_", niter, ".phi", sep=""))
+#data.set <- load.data.file(paste(result.folder, prefix, "_xobs_", suffix, ".dat", sep=""))
+#estm.phi <- read.csv(paste(result.folder, prefix, "_xobs_", suffix, ".phi", sep=""))
 #data.set <- load.data.file("../results/rm_first_50_aa/without_xobs_multichain.dat")
 load(paste(result.folder, "without_xobs_multichain_lapply_4cores.dat", sep=""))
 estm.phi <- read.csv(paste(result.folder, "without_xobs_multichain_lapply_4cores.phi", sep=""))
@@ -26,22 +27,22 @@ emp <- emp$empirical[names(emp$empirical) %in% estm.phi[, 1]]
 
 
 #### PLOT TRACES
-pdf(paste(result.folder, prefix, "_logmu_", niter, ".pdf", sep = ""), width = 12, height = 11)
+pdf(paste(result.folder, prefix, "_logmu_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 #plotTraces(data.set$res[[1]]$b.Mat, config$aa, param="logmu", main=paste("AA parameter trace ", prefix, sep=""))
 plotTraces(chain$b.Mat, config$aa, param="logmu", main=paste("AA parameter trace ", prefix, sep=""))
 dev.off()
  
-pdf(paste(result.folder, prefix, "_deltat_", niter, ".pdf", sep = ""), width = 12, height = 11)
+pdf(paste(result.folder, prefix, "_deltat_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 #plotTraces(data.set$res[[1]]$b.Mat, config$aa, param="deltat", main=paste("AA parameter trace ", prefix, sep=""))
 plotTraces(chain$b.Mat, config$aa, param="deltat", main=paste("AA parameter trace ", prefix, sep=""))
 dev.off()
 
-pdf(paste(result.folder, prefix, "_pMat_trace_", niter, ".pdf", sep = ""), width = 6, height = 4)
+pdf(paste(result.folder, prefix, "_pMat_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
 #plotPTraces(data.set$res[[1]]$p.Mat)
 plotPTraces(chain$p.Mat)
 dev.off()
 
-pdf(paste(result.folder, prefix, "_expPhi_trace_", niter, ".pdf", sep = ""), width = 6, height = 4)
+pdf(paste(result.folder, prefix, "_expPhi_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
 if(prefix == "w_o")
 {
   #plotExpectedPhiTrace(data.set$res[[1]]$phi.pred.Mat)
@@ -52,15 +53,13 @@ if(prefix == "w_o")
 }
 dev.off()
 
-
-
-ll <- plot.likelihood.trace(data.set)
-mean(ll)
-
+pdf(paste(result.folder, prefix, "_logL_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
+ll <- plot.likelihood.trace(chain, data, config$use.n.samples)
+dev.off()
 
 
 #### PLOT CUB
-pdf(paste(result.folder, prefix, "_CUB_obs_bin_", niter, ".pdf", sep = ""), width = 12, height = 11)
+pdf(paste(result.folder, prefix, "_CUB_obs_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 # plotCUB(data.set$data$reu13.df, data.set$res[[1]]$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2], rescale=T,
 #          model.label="MCMC Posterior", main="CUB binning of observed phi")
 plotCUB(data$reu13.df, chain$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2], rescale=T,
@@ -69,36 +68,14 @@ dev.off()
 
 bin.phis <- estm.phi[estm.phi[, 1] %in% names(emp), 2]
 names(bin.phis) <- names(emp)
-pdf(paste(result.folder, prefix, "_CUB_est_bin_", niter, ".pdf", sep = ""), width = 12, height = 11)
+pdf(paste(result.folder, prefix, "_CUB_est_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 # plotCUB(data.set$data$reu13.df, data.set$res[[1]]$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
 #          model.label="MCMC Posterior", main="CUB binning of estimated phi")
 plotCUB(data$reu13.df, chain$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
         model.label="MCMC Posterior", main="CUB binning of estimated phi")
 dev.off()
 
-
-
-
-
-### COMPARE TWO RUNS
-w.phi <- read.csv(paste(result.folder, "wphi_no_low_conf_80k.txt", sep=""))
-wo.phi <- read.csv(paste(result.folder, "wophi_no_low_conf_80k.txt", sep=""))
-
-pdf(paste(result.folder, "withphi_vs_fitIC_sdlog05", ".pdf", sep = ""), width = 10, height = 10)
-xy.max <- max(cbind(w.phi[,2], wo.phi[,2]))
-reg <- lm(wo.phi[, 2]~w.phi[, 2])
-plot(w.phi[, 2], wo.phi[,2], xlim=c(0, xy.max), ylim=c(0,xy.max),
-     main=expression(paste("with ", phi, " fit vs. fitted IC")),
-     sub=paste("R^2=", format(summary(reg)$r.squared, digits = 3), sep=""),
-     xlab=expression(paste("with obs. ", phi)), ylab=expression(paste("fit. I.C. ", phi)))
-abline(0,1, lty=2)
-abline(reg, col="red", lwd=2)
-dev.off()
-
-
-
-
-pdf(paste(result.folder, prefix, "_vs_obs_phi_", niter , ".pdf", sep = ""), width = 10, height = 10)
+pdf(paste(result.folder, prefix, "_vs_obs_phi_", suffix , ".pdf", sep = ""), width = 10, height = 10)
 reg <- lm(log10(estm.phi[estm.phi[, 1] %in% names(emp), 2])~log10(emp))
 plot(log10(emp), log10(estm.phi[estm.phi[, 1] %in% names(emp), 2]), 
      main=expression(paste("Estim. ", phi, " vs. Obs. ", phi)),
@@ -108,7 +85,7 @@ abline(reg, col="red", lwd=2)
 dev.off()
 
 
-pdf(paste(result.folder, prefix, "_histogram_", niter , ".pdf", sep = ""), width = 10, height = 10)
+pdf(paste(result.folder, prefix, "_histogram_", suffix , ".pdf", sep = ""), width = 10, height = 10)
 layout(c(1,2))
 hist(log10(estm.phi[estm.phi[, 1] %in% names(emp), 2]), nclass=50, main=paste(prefix, " X obs.", sep=""), xlab="estim. phi (log10)",
      sub=paste("mean=", format(mean(log10(estm.phi[estm.phi[, 1] %in% names(emp), 2])), digits = 3), sep=""))
@@ -116,34 +93,49 @@ hist(log10(emp), nclass=50, main="excluding unreliable X", xlab="emp. phi (log10
      sub=paste("mean=", format(mean(log10(emp)), digits = 3), sep=""))
 dev.off()
 
-
-
-
+pdf(paste(result.folder, prefix, "_convergence_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
 plot(convergence, xlab="Iteration", ylab="Gelman Score")
-data <- as.data.frame(convergence)
-data <- list(x=data[,1], y=data[,2])
-model <- nls(y ~ 1.213+exp(c + d * x), data = data, start = list(c = 0, d = 0))
-
-
-iter <- seq(1, max(convergence[,1]))
-pred.score <- (predict(model, list(x=iter)))
-plot(data$x, data$y, xlab="Iteration", ylab="Gelman Score")
-lines(iter, pred.score, type="l")
-
-
-plot.w.phi.vs.wo.phi(res.w.phi, res.wo.phi))
-plot.pred.vs.emp(data.set$mean.phis)
-
-
-
-estim.phi <- read.csv(paste(result.folder, "sdlog05_fittedIC.txt", sep=""))
-pdf(paste(result.folder, "metrics_sdlog05_fittedIC.pdf", sep=""), width=16, height=10)
-plot(estim.phi[, 2:5], main=expression(paste("est. ", bar(phi))))
 dev.off()
 
 
+# data <- as.data.frame(convergence)
+# data <- list(x=data[,1], y=data[,2])
+# model <- nls(y ~ 1.2+exp(c + d * x), data = data, start = list(c = 0, d = 0))
+# 
+# 
+# iter <- seq(1, 2*max(convergence[,1]))
+# pred.score <- (predict(model, list(x=iter)))
+# plot(iter, pred.score, type="l", xlab="Iteration", ylab="Gelman Score", main="Convergence trend")
+# points(data$x, data$y)
+# 
+# 
+# plot.w.phi.vs.wo.phi(res.w.phi, res.wo.phi))
+# plot.pred.vs.emp(data.set$mean.phis)
 
 
+
+# estim.phi <- read.csv(paste(result.folder, "sdlog05_fittedIC.txt", sep=""))
+# pdf(paste(result.folder, "metrics_sdlog05_fittedIC.pdf", sep=""), width=16, height=10)
+# plot(estim.phi[, 2:5], main=expression(paste("est. ", bar(phi))))
+# dev.off()
+
+
+
+
+# ### COMPARE TWO RUNS
+# w.phi <- read.csv(paste(result.folder, "wphi_no_low_conf_80k.txt", sep=""))
+# wo.phi <- read.csv(paste(result.folder, "wophi_no_low_conf_80k.txt", sep=""))
+# 
+# pdf(paste(result.folder, "withphi_vs_fitIC_sdlog05", ".pdf", sep = ""), width = 10, height = 10)
+# xy.max <- max(cbind(w.phi[,2], wo.phi[,2]))
+# reg <- lm(wo.phi[, 2]~w.phi[, 2])
+# plot(w.phi[, 2], wo.phi[,2], xlim=c(0, xy.max), ylim=c(0,xy.max),
+#      main=expression(paste("with ", phi, " fit vs. fitted IC")),
+#      sub=paste("R^2=", format(summary(reg)$r.squared, digits = 3), sep=""),
+#      xlab=expression(paste("with obs. ", phi)), ylab=expression(paste("fit. I.C. ", phi)))
+# abline(0,1, lty=2)
+# abline(reg, col="red", lwd=2)
+# dev.off()
 
 
 

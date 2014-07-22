@@ -37,12 +37,11 @@ get.logL <- function(ret, data, model="roc")
                                                    names(data$reu13.df),
                                                    model = model)
                         bInit <- lapply(bInit, function(B) B$coefficients)
-                        sigmaWsq <- ret$p.Mat[[i.iter]][1]^2
                         tmp <- .cubfitsEnv$my.logLAll(xx, phi.Obs, data$y, data$n, bInit,
-                                                      sigmaWsq,
+                                                      ret$p.Mat[[i.iter]],
                                                       reu13.df = data$reu13.df)
                         sum(tmp)
-                      }, mc.cores=2)
+                      }, mc.cores=4)
   }
   else
   {
@@ -56,7 +55,7 @@ get.logL <- function(ret, data, model="roc")
                        tmp <- .cubfitsEnv$my.logLAllPred(phi=xx, y=data$y, n=data$n, b=bInit,
                                                          reu13.df = data$reu13.df)
                        sum(tmp)
-                     }, mc.cores=2)
+                     }, mc.cores=4)
   }
 }
 
