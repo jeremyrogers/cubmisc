@@ -1,0 +1,155 @@
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -o ../results/conv_test_noadjustments/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples: 200 
+Min samples: 2000 
+Max samples: 10000 
+Reset QR until: 0 samples
+Thining: store every 50 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 600 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.1 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-07-21 15:56:40 
+using cubappr 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+	 with seeds: 63450 13439 22780 72432
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+Gelman score after sample: 601	1.47758987922685	 test was performed on 601 samples
+Gelman score after sample: 801	1.44554486601857	 test was performed on 801 samples
+Gelman score after sample: 1001	1.42515116876536	 test was performed on 1000 samples
+Gelman score after sample: 1201	1.40931539360294	 test was performed on 1080 samples
+Gelman score after sample: 1401	1.39779061967197	 test was performed on 1160 samples
+Gelman score after sample: 1601	1.38878044687528	 test was performed on 1240 samples
+Gelman score after sample: 1801	1.38227743844761	 test was performed on 1320 samples
+Gelman score after sample: 2001	1.37654491151347	 test was performed on 1400 samples
+Gelman score after sample: 2201	1.37206241337015	 test was performed on 1480 samples
+Gelman score after sample: 2401	1.3679657574073	 test was performed on 1560 samples
+Gelman score after sample: 2601	1.36418515808064	 test was performed on 1640 samples
+Gelman score after sample: 2801	1.36049775972916	 test was performed on 1720 samples
+Gelman score after sample: 3001	1.35739236957316	 test was performed on 1800 samples
+Gelman score after sample: 3201	1.35515162389874	 test was performed on 1880 samples
+Gelman score after sample: 3401	1.35376868248935	 test was performed on 1960 samples
+Gelman score after sample: 3601	1.35250452871729	 test was performed on 2040 samples
+Gelman score after sample: 3801	1.35095395762588	 test was performed on 2120 samples
+Gelman score after sample: 4001	1.34918494694402	 test was performed on 2200 samples
+Gelman score after sample: 4201	1.3478275074239	 test was performed on 2280 samples
+Gelman score after sample: 4401	1.34730649052798	 test was performed on 2360 samples
+Gelman score after sample: 4601	1.3468267815097	 test was performed on 2440 samples
+Gelman score after sample: 4801	1.3472392908757	 test was performed on 2520 samples
+Gelman score after sample: 5001	1.34728801877243	 test was performed on 2600 samples
+Gelman score after sample: 5201	1.34752190383945	 test was performed on 2680 samples
+Gelman score after sample: 5401	1.34754641170969	 test was performed on 2760 samples
+Gelman score after sample: 5601	1.34790952263622	 test was performed on 2840 samples
+Gelman score after sample: 5801	1.34842780866581	 test was performed on 2920 samples
+Gelman score after sample: 6001	1.34955916442345	 test was performed on 3000 samples
+Gelman score after sample: 6201	1.35005836594446	 test was performed on 3080 samples
+Gelman score after sample: 6401	1.35105581866418	 test was performed on 3160 samples
+Gelman score after sample: 6601	1.3520771700192	 test was performed on 3240 samples
+Gelman score after sample: 6801	1.35365278573727	 test was performed on 3320 samples
+Gelman score after sample: 7001	1.35461636809512	 test was performed on 3400 samples
+Gelman score after sample: 7201	1.35526746523357	 test was performed on 3480 samples
+Gelman score after sample: 7401	1.35549917886744	 test was performed on 3560 samples
+Gelman score after sample: 7601	1.35582862121697	 test was performed on 3640 samples
+Gelman score after sample: 7801	1.35622860862648	 test was performed on 3720 samples
+Gelman score after sample: 8001	1.35722733753826	 test was performed on 3800 samples
+Gelman score after sample: 8201	1.35815750689431	 test was performed on 3880 samples
+Gelman score after sample: 8401	1.35948258512933	 test was performed on 3960 samples
+Gelman score after sample: 8601	1.36089065480412	 test was performed on 4040 samples
+Gelman score after sample: 8801	1.36204240635461	 test was performed on 4120 samples
+Gelman score after sample: 9001	1.36289354795032	 test was performed on 4200 samples
+Gelman score after sample: 9201	1.36367084035475	 test was performed on 4280 samples
+Gelman score after sample: 9401	1.36467405009032	 test was performed on 4360 samples
+Gelman score after sample: 9601	1.36555801623109	 test was performed on 4440 samples
+Gelman score after sample: 9801	1.36671907153407	 test was performed on 4520 samples
+Gelman score after sample: 10001	1.36764696534341	 test was performed on 4600 samples
+Elapsed time for 4 chains doing  iterations on 4 cores was 1340.02 min
+process results...
+saving results...
+finished at: 2014-07-22 14:25:19 
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -o ../results/conv_test_noadjustments/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples: 200 
+Min samples: 2000 
+Max samples: 10000 
+Reset QR until: 0 samples
+Thining: store every 50 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 600 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.1 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+started at: 2014-07-22 16:08:17 
+using cubappr 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+	 with seeds: 33205 38878 3744 65010
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.

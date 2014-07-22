@@ -11,4 +11,39 @@
 		- convergence criterion was Gelman score < 1.05
 		- final Gelman score is 1.1473 -> not converged according to criterion
 
+* wo_short_200aa
+	K12 genome fit without x obs.
+	Check if sequence is longer than 200 aa for comparison with rm_first_50aa
+	Observed data for comparison is from Li et al. 2014
+		- simulating 4 chains 
+		- initial sd log is 1, 0.25, 2, 3 
+		- initial phi values drawn from logN with sd log of 1, 0.25, 2, 3 
+		- use 1000 iterations for run, 1000 iterations for burn in.
+		- min iterations 10000, max iterations 80000
+		- check for convergence every 2000 iterations (use 3000)
+		- convergence criterion was Gelman score < 1.05
+		- final Gelman score is 1.141 -> not converged according to criterion		
 
+* conv_test
+	K12 genome fit without x obs.
+	Observed data for comparison is from Li et al. 2014
+		- simulating 4 chains 
+		- initial sd log is 0.5, 1, 2, 4
+		- initial phi values drawn from logN with sd log of 0.5, 1, 2, 4
+		- use 5000 iterations for run
+		- min iterations 20000, max iterations 220000
+		- check for convergence every 5000 iterations (use 3000)
+		- convergence criterion was Gelman score < 1.05
+		- final Gelman score is 1.21 -> not converged according to criterion	
+
+* conv_test_noadjustments
+	K12 genome fit without x obs.
+	Observed data for comparison is from Li et al. 2014
+		- simulating 4 chains 
+		- initial sd log is 0.5, 1, 2, 4 
+		- initial phi values drawn from logN with sd log of 0.5, 1, 2, 4 
+		- use 200 samples for run
+		- min samples 2000, max samples 10000
+		- check for convergence every 200 samples (use 600)
+		- convergence criterion was Gelman score < 1.1
+		- final Gelman score is 1.368 -> not converged according to criterion	
