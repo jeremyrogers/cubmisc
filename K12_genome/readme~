@@ -37,6 +37,7 @@
 		- final Gelman score is 1.21 -> not converged according to criterion	
 
 * conv_test_noadjustments
+	All chain length units are in samples, NOT in iterations anymore
 	K12 genome fit without x obs.
 	Observed data for comparison is from Li et al. 2014
 		- simulating 4 chains 

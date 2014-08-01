@@ -1,3 +1,14 @@
+* K12_withoutXobs_normprior_0_0.35
+	K12 genome fit without x obs.
+	Observed data for comparison is from Li et al. 2014
+		- simulating 4 chains 
+		- initial sd log is 0.5, 1, 2, 4
+		- initial phi values drawn from logN with sd log of 0.5, 1, 2, 4
+		- min samples 5000, max samples 15000
+		- check for convergence every 500 samples (use half of total samples)
+		- convergence criterion was Gelman score < 1.15
+		- final Gelman score is 1.22 -> not converged according to criterion
+
 * rm_first_50aa
 	K12 genome fit without x obs.
 	Remove the first 50 aa then check if sequence is longer than 150 aa.

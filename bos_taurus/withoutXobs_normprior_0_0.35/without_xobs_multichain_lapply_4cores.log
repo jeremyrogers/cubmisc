@@ -1,0 +1,84 @@
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../bos_taurus/data/bt_mgc_cds_nt.fasta -o ../bos_taurus/results/withoutXobs_normprior_0_0.35/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+started at: 2014-07-31 14:49:02 
+using cubappr 
+reading sequences from file ../bos_taurus/data/bt_mgc_cds_nt.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+	 with seeds: 37296 74273 62830 48148
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+Gelman score after sample: 501	2.48558678539646	 test was performed on 250 samples
+Gelman score after sample: 1001	2.43556574437767	 test was performed on 500 samples
+Gelman score after sample: 1501	2.30422856041974	 test was performed on 750 samples
+Gelman score after sample: 2001	2.20175766541847	 test was performed on 1000 samples
+Gelman score after sample: 2501	2.12109037087539	 test was performed on 1250 samples
+Gelman score after sample: 3001	2.05693523158438	 test was performed on 1500 samples
+Gelman score after sample: 3501	2.00546690406748	 test was performed on 1750 samples
+Gelman score after sample: 4001	1.96131198118574	 test was performed on 2000 samples
+Gelman score after sample: 4501	1.9223765123075	 test was performed on 2250 samples
+Gelman score after sample: 5001	1.89066919890602	 test was performed on 2500 samples
+Gelman score after sample: 5501	1.86279400648864	 test was performed on 2750 samples
+Gelman score after sample: 6001	1.83881515235181	 test was performed on 3000 samples
+Gelman score after sample: 6501	1.81744551388916	 test was performed on 3250 samples
+Gelman score after sample: 7001	1.79768529446848	 test was performed on 3500 samples
+Gelman score after sample: 7501	1.7794788561692	 test was performed on 3750 samples
+Gelman score after sample: 8001	1.76311475622336	 test was performed on 4000 samples
+Gelman score after sample: 8501	1.74805318052394	 test was performed on 4250 samples
+Gelman score after sample: 9001	1.73416644209693	 test was performed on 4500 samples
+Gelman score after sample: 9501	1.72182568309998	 test was performed on 4750 samples
+Gelman score after sample: 10001	1.71022628479911	 test was performed on 5000 samples
+Gelman score after sample: 10501	1.69929684714226	 test was performed on 5250 samples
+Gelman score after sample: 11001	1.68884014313052	 test was performed on 5500 samples
+Gelman score after sample: 11501	1.67940780550007	 test was performed on 5750 samples
+Gelman score after sample: 12001	1.6705638579027	 test was performed on 6000 samples
+Gelman score after sample: 12501	1.66168271878764	 test was performed on 6250 samples
+Gelman score after sample: 13001	1.65328158666129	 test was performed on 6500 samples
+Gelman score after sample: 13501	1.64568371084896	 test was performed on 6750 samples
+Gelman score after sample: 14001	1.63819470658487	 test was performed on 7000 samples
+Gelman score after sample: 14501	1.6316745775156	 test was performed on 7250 samples
+Gelman score after sample: 15001	1.62523820841343	 test was performed on 7500 samples
+Elapsed time for 4 chains doing  iterations on 4 cores was 931.98 min
+process results...
+saving results...
+finished at: 2014-08-01 06:45:39 
