@@ -40,25 +40,25 @@ print.config <- function(config)
 
 
 config <- list(
-  n.samples = 200,  # number of samples between convergence checks.
-  use.n.samples = 600, #sample size for testing for convergence. 
+  n.samples = 500,  # number of samples between convergence checks.
+  use.n.samples = 1000, #sample size for testing for convergence. 
                      #If convergence threshold, set in eps, is reached the sample size of our posteriors equals this value. 
 		                 #IMPORTANT: Make sure this one is smaller than the thined chain, otherwise saving will crash!
   n.chains = 4, # num chains
   n.cores = 4, # total num of cpu cores (should be about 5*n.chains when using parallel method other then "lapply")
   selected.env = 1, # deprecated (us if more than one dataset is stored in csv, e.g. different conditions)
-  min.samples=2000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
-  max.samples=10000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
+  min.samples=5000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
+  max.samples=15000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
   reset.qr=0, # stop resetting qr matrix when checking for convergence after this many samples (after thining)
   conv.thin=1,  # thining for convergence test (recommend 1 if chain.thin != 1, otherwise double thining)
-  chain.thin=50, # thining of the chain during runtime. This is done before gathering convergence test sample. See note for conv.thin.
+  chain.thin=10, # thining of the chain during runtime. This is done before gathering convergence test sample. See note for conv.thin.
   rm.first.aa=0, # remove first rm.first.aa AAs (after the first codon which is expected to be the start codon)
   rm.short=0, # # ignore sequences with length < rm.short AAs after the first rm.first.aa AAs are removed
   parallel="lapply", # parallel method within chain 
                      # lapply = no parallelization within chain)
                      # mclapply = parallelization within chain.
 		                 # Other options are also possible.
-  eps=0.1,  # Convergence threshold.
+  eps=0.15,  # Convergence threshold.
             # Multichain MCMC uses with Gelman test where threshold is |Gelman Score - 1| < eps 
             # Single chain MCMC uses Geweke test where Geweke score < eps.
   gf=0.4, ## growthfactor for convergence test window (n.samples + gf*currSamples)

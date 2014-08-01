@@ -1,3 +1,4 @@
+
 ## check if all packages are installed to run this script
 check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% rownames(installed.packages()), 
                 "VGAM" %in% rownames(installed.packages()), "coda" %in% rownames(installed.packages()),
@@ -60,8 +61,8 @@ if(debug.code){
   ## I/O variables
   
   sdlog.phi.init <- c(0.5,1,2,4) # has to be non 0 for cubappr
-  fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
-  fn.phi.in <- "../data/ecoli_X_obs.csv"
+  fn.in <- "../ecoli/data/ecoli_K12_MG1655_genome_filtered.fasta"
+  fn.phi.in <- "../ecoli/data/ecoli_X_obs.csv"
   fname <- "test"
   out.folder <- "../results/test/"
   fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
@@ -116,8 +117,8 @@ seq.string <- readGenome(fn.in, config$rm.short, config$rm.first.aa)
 ## if using Xobs data 
 if(cubmethods == "cubfits")
 {
-  cat(paste("reading gene expression measurements (Xobs) from file\n", fn.phi.in, "\nand compare to ORF list from FASTA file\n", fn.phi, "\n"))
-  ret.list <- read.empirical.data(fn.phi.in, seq.string, config$selected.env)
+  cat(paste("reading gene expression measurements (Xobs) from file\n", fn.phi.in, "\nand compare to ORF list from FASTA file\n", fn.in, "\n"))
+  ret.list <- read.empirical.data(fn.phi.in, seq.string, config$selected.env, 0)
   phi.obs <- ret.list$empirical
   phi.obs <- phi.obs[order(names(phi.obs))]
   seq.string <- ret.list$genome
@@ -175,6 +176,8 @@ cat("\t with seeds: ");cat(seeds);cat("\n")
 runtime.info <- system.time(
   {
     .CF.CT$parallel <- config$parallel
+    .CF.CONF$compute.logL <- T
+    .CF.CT$prior.dist <- "normal"
     iterations <- config$n.samples*config$chain.thin # between convergence checks
     if(cubmethods == "cubfits"){
       .CF.CT$type.p <- "lognormal_bias"
@@ -182,16 +185,16 @@ runtime.info <- system.time(
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, nsamples=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
-                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi", growthfactor=config$gf, 
+        results <- cubsinglechain(cubmethods, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi",
                                min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
                                nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, nsamples=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+        results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
                                swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
-                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,  growthfactor=config$gf, 
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
                                nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
@@ -199,16 +202,16 @@ runtime.info <- system.time(
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
-        results <- cubsinglechain(cubmethods, nsamples=config$use.n.samples, frac1=config$frac1, frac2=config$frac2, 
-                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi", growthfactor=config$gf,
+        results <- cubsinglechain(cubmethods, frac1=config$frac1, frac2=config$frac2, 
+                               reset.qr=config$reset.qr, seed=seeds[1], teston="sphi",
                                min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
                                nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
-        results <- cubmultichain(cubmethods, nsamples=config$use.n.samples, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
+        results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
                                swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
-                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps, growthfactor=config$gf,
+                               nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,
                                #monitor=function(x, i){cat(paste("I am monitor for chain", i, "\n"))},
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
                                nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
