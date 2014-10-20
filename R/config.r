@@ -40,15 +40,19 @@ print.config <- function(config)
 
 
 config <- list(
-  n.samples = 500,  # number of samples between convergence checks.
-  use.n.samples = 1000, #sample size for testing for convergence. 
+  n.samples = 10000,  # number of samples between convergence checks.
+  use.n.samples = 200, #sample size for testing for convergence. 
+#  n.samples = 1000,  # number of samples between convergence checks.
+#  use.n.samples = 1000, #sample size for testing for convergence. 
                      #If convergence threshold, set in eps, is reached the sample size of our posteriors equals this value. 
 		                 #IMPORTANT: Make sure this one is smaller than the thined chain, otherwise saving will crash!
-  n.chains = 4, # num chains
-  n.cores = 4, # total num of cpu cores (should be about 5*n.chains when using parallel method other then "lapply")
+  n.chains = 1, # num chains
+  n.cores = 1, # total num of cpu cores (should be about 5*n.chains when using parallel method other then "lapply")
   selected.env = 1, # deprecated (us if more than one dataset is stored in csv, e.g. different conditions)
-  min.samples=5000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
-  max.samples=15000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
+
+  min.samples=10000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
+  max.samples=10000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
+
   reset.qr=0, # stop resetting qr matrix when checking for convergence after this many samples (after thining)
   conv.thin=1,  # thining for convergence test (recommend 1 if chain.thin != 1, otherwise double thining)
   chain.thin=10, # thining of the chain during runtime. This is done before gathering convergence test sample. See note for conv.thin.

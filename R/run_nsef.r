@@ -1,4 +1,6 @@
-#Rprof(filename = "BeforeChange.rprof")
+##ADDED Rprof
+Rprof(filename = "AfterChange.out")
+
 
 ## check if all packages are installed to run this script
 check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% rownames(installed.packages()), 
@@ -13,7 +15,7 @@ if(sum(check.pack) != length(check.pack))
 
 
 #suppressMessages(library(cubfits, quietly = TRUE))
-suppressMessages(library(cubfits, lib.loc="~/cubfitsROCdebug", quietly = TRUE))
+suppressMessages(library(cubfits, lib.loc="~/cubfitsNSEdebug", quietly = TRUE))
 suppressMessages(library(psych, quietly = TRUE))
 ##suppressMessages(library(Rmisc, quietly = TRUE))
 suppressMessages(library(getopt, quietly = TRUE))
@@ -42,11 +44,12 @@ cat("===========================================================================
 cat("================================ START HEADER =====================================\n")
 cat("===================================================================================\n")
 args <- commandArgs(trailingOnly = TRUE)
-cat("Function call:\nRscript run_roc.r ");cat(args);cat("\n\n")
+cat("Function call:\nRscript run_nsef.r ");cat(args);cat("\n\n")
 
 opt <- getopt(spec, args)
 ## print config file to log
 print.config(config)
+browser();
 cat("===================================================================================\n")
 cat("================================= END HEADER ======================================\n")
 cat("===================================================================================\n\n\n")
@@ -63,8 +66,8 @@ if(debug.code){
   ## I/O variables
   
   sdlog.phi.init <- c(0.5,1,2,4) # has to be non 0 for cubappr
-  fn.in <- "../ecoli/data/ecoli_K12_MG1655_genome_filtered.fasta"
-  fn.phi.in <- "../ecoli/data/ecoli_X_obs.csv"
+  fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
+  fn.phi.in <- "../data/ecoli_X_obs.csv"
   fname <- "test"
   out.folder <- "../results/test/"
   fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
@@ -87,10 +90,26 @@ if(debug.code){
     p.init[[4]] <- c(-8.0, 4.0)
   }  
 }else{    
+##########################################################
+########		set by Logan		##########
+######## If commented, uncomment, else comment	##########
+######## In vim,				##########
+######## reset to normal with the following commands
+######## :107,131s/^/#debug#/
+######## :107,131s/#debug##run#//
+######## :107,131s/#debug####/###/
+########
+######## set to debug with the following commands 	
+######## :107,131s/^/#run#/
+######## :107,131s/#run##debug#//
+######## :107,131s/#run####/###/
+########
+##########################################################
+#debug#sdlog.phi.init <- c(0.5,1,2,4)
   sdlog.phi.init <- opt$sdlog
   sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
-  ## set method for either with Xobs, cubfits, or without Xobs, cubappr,
-  ## NOTE: cross validation approach, cubpred, is not supported in this script
+#debug#  ## set method for either with Xobs, cubfits, or without Xobs, cubappr,
+#debug#  ## NOTE: cross validation approach, cubpred, is not supported in this script
   cubmethods <- opt$cubmethod
   fn.in <- opt$fnin
   fn.phi.in <- opt$fnpin
@@ -98,6 +117,25 @@ if(debug.code){
   out.folder <- opt$fnout
   fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
   fn.out <- paste(out.folder, fname, ".dat", sep="")
+#
+##########################################################
+########		set by Logan		##########
+##########################################################
+#debug##
+#debug#cubmethods <- "cubfits"
+#debug#fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
+#debug#fn.phi.in <- "../data/ecoli_X_obs.csv"
+#debug#fname <- "test"
+#debug#out.folder <- "../results/test/"
+#debug#fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+#debug#fn.out <- paste(out.folder, fname, ".dat", sep="")
+#
+##########################################################
+######## 	End switching comments		##########
+########		set by Logan		##########
+##########################################################
+#
+
   
   if(!is.null(opt$pinit))
   {
@@ -187,41 +225,46 @@ runtime.info <- system.time(
       .CF.CONF$estimate.bias.Phi <- T
       if(config$n.chains < 2)
       {
+	.CF.CT$model <- "nsef";	#added by Logan LOGAN logan
         results <- cubsinglechain(cubmethods, frac1=config$frac1, frac2=config$frac2, 
                                reset.qr=config$reset.qr, seed=seeds[1], teston="sphi",
                                min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
                                nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               model="nsef", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
+	.CF.CT$model <- "nsef";	#added by Logan LOGAN logan
         results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
                                swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
                                nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi,
                                nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               model="nsef", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }else if(cubmethods == "cubappr") {
       if(config$n.chains < 2)
       {
+	.CF.CT$model <- "nsef";	#added by Logan LOGAN logan
         results <- cubsinglechain(cubmethods, frac1=config$frac1, frac2=config$frac2, 
                                reset.qr=config$reset.qr, seed=seeds[1], teston="sphi",
                                min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
                                reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi[[1]],
                                nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               model="nsef", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
+	.CF.CT$model <- "nsef";	#added by Logan LOGAN logan
         results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
                                swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 
                                nchains=config$n.chains, conv.thin=config$conv.thin, eps=config$eps,
                                #monitor=function(x, i){cat(paste("I am monitor for chain", i, "\n"))},
                                ncores=config$n.cores, reu13.df.obs=data$reu13.df, y=data$y, n=data$n, phi.pred.Init=init.phi,
                                nIter=iterations, p.Init=p.init, iterThin=config$chain.thin,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               model="nsef", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }
     }
   }
-) 
+
+)###END SYSTEM TIMING 
 
 cat(paste("Elapsed time for", config$n.chains, "chains doing", config$n.iter, "iterations on", config$n.cores, "cores was", round(runtime.info["elapsed"]/60, digits=2), "min\n" ))
 seq.string.names <- names(seq.string)
@@ -312,14 +355,13 @@ colnames(means) <- c("ORF_Info", "Phi_Post_Arith_Mean", "Phi_Post_Median", "Phi_
 write.csv(means, file = fn.phi.out, row.names=F, quote=F)
 
 
-if(config$n.chains > 1){
 #mean.b.mat <- cbind(bmat.names, mean.b.mat, sd.b.mat)
+
+if(config$n.chains > 1){
 mean.b.mat <- cbind(names(results$chains[[1]]$b.Mat[[1]]), mean.b.mat, sd.b.mat)
-}
-else{
+}else{
 mean.b.mat <- cbind(names(results$chains$b.Mat[[1]]), mean.b.mat, sd.b.mat)
 }
-
 
 colnames(mean.b.mat) <- c("Parameter", "Value", "SD")
 write.csv(mean.b.mat, file = paste(out.folder, fname, ".bmat", sep=""), row.names=F, quote=F)
@@ -343,4 +385,4 @@ cat(paste("finished at:", Sys.time(), "\n"))
 rm("phi.pred")
 
 
-#Rprof(NULL)
+Rprof(NULL)

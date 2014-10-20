@@ -1,4 +1,4 @@
-#Rprof(filename = "BeforeChange.rprof")
+##Rprof()
 
 ## check if all packages are installed to run this script
 check.pack <- c( "cubfits" %in% rownames(installed.packages()), "psych" %in% rownames(installed.packages()), 
@@ -42,7 +42,7 @@ cat("===========================================================================
 cat("================================ START HEADER =====================================\n")
 cat("===================================================================================\n")
 args <- commandArgs(trailingOnly = TRUE)
-cat("Function call:\nRscript run_roc.r ");cat(args);cat("\n\n")
+cat("Function call:\nsource(\"debug_roc.r\" ");cat(args);cat("\n\n")
 
 opt <- getopt(spec, args)
 ## print config file to log
@@ -87,18 +87,52 @@ if(debug.code){
     p.init[[4]] <- c(-8.0, 4.0)
   }  
 }else{    
-  sdlog.phi.init <- opt$sdlog
-  sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
+##########################################################
+########                set by Logan            ##########
+######## If commented, uncomment, else comment  ##########
+######## In vim,                                ##########
+######## reset to normal with the following commands
+######## :105,129s/^/#debug#/
+######## :105,129s/#debug##run#//
+######## :105,129s/#debug####/###/
+########
+######## set to debug with the following commands       
+######## :105,129s/^/#run#/
+######## :105,129s/#run##debug#//
+######## :105,129s/#run####/###/
+########
+##########################################################
+sdlog.phi.init <- c(0.5,1,2,4)
+#run#  sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
   ## set method for either with Xobs, cubfits, or without Xobs, cubappr,
   ## NOTE: cross validation approach, cubpred, is not supported in this script
-  cubmethods <- opt$cubmethod
-  fn.in <- opt$fnin
-  fn.phi.in <- opt$fnpin
-  fname <- opt$fname
-  out.folder <- opt$fnout
-  fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
-  fn.out <- paste(out.folder, fname, ".dat", sep="")
+#run#  cubmethods <- opt$cubmethod
+#run#  fn.in <- opt$fnin
+#run#  fn.phi.in <- opt$fnpin
+#run#  fname <- opt$fname
+#run#  out.folder <- opt$fnout
+#run#  fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+#run#  fn.out <- paste(out.folder, fname, ".dat", sep="")
+#
+##########################################################
+########		set by Logan		##########
+##########################################################
+#
+cubmethods <- "cubfits"
+fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
+fn.phi.in <- "../data/ecoli_X_obs.csv"
+fname <- "test"
+out.folder <- "../results/test/"
+fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+fn.out <- paste(out.folder, fname, ".dat", sep="")
+#
+##########################################################
+######## 	End switching comments		##########
+########		set by Logan		##########
+##########################################################
+#
   
+
   if(!is.null(opt$pinit))
   {
     p.init <- as.list(read.table(opt$pinit, header=F, sep=","))
@@ -315,8 +349,7 @@ write.csv(means, file = fn.phi.out, row.names=F, quote=F)
 if(config$n.chains > 1){
 #mean.b.mat <- cbind(bmat.names, mean.b.mat, sd.b.mat)
 mean.b.mat <- cbind(names(results$chains[[1]]$b.Mat[[1]]), mean.b.mat, sd.b.mat)
-}
-else{
+}else{
 mean.b.mat <- cbind(names(results$chains$b.Mat[[1]]), mean.b.mat, sd.b.mat)
 }
 
@@ -343,4 +376,4 @@ cat(paste("finished at:", Sys.time(), "\n"))
 rm("phi.pred")
 
 
-#Rprof(NULL)
+##Rprof(NULL)

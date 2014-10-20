@@ -22,7 +22,7 @@ mapBMatNames <- function(in.names, aa.names)
 
 
 
-get.logL <- function(ret, data, model="roc")
+get.logL <- function(ret, data, model="nsef")
 {
   require(multicore)
   if(is.null(ret[["phi.Mat"]])){
