@@ -24,7 +24,7 @@ mapBMatNames <- function(in.names, aa.names)
 
 get.logL <- function(ret, data, model="nsef")
 {
-  require(multicore)
+  #require(multicore)
   if(is.null(ret[["phi.Mat"]])){
     ret$phi.Mat <- ret$phi.pred.Mat
   }
@@ -45,7 +45,8 @@ get.logL <- function(ret, data, model="nsef")
   }
   else
   {
-    logL <- mclapply(1:length(ret$phi.Mat),
+    #logL <- mclapply(1:length(ret$phi.Mat),
+    logL <- parallel::mclapply(1:length(ret$phi.Mat),
                      function(i.iter){
                        xx <- ret$phi.Mat[[i.iter]]
                        bInit <- convert.bVec.to.b(ret$b.Mat[[i.iter]],

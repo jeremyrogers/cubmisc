@@ -5,15 +5,13 @@ cubmethod="cubfits" # change method
 sdlog="0.5 1 2 4" # change sdlog in command line, have to figure out why it is not working with variable
 #
 #genome="../data/ecoli_K12_MG1655_genome_filtered.fasta"
-#genome="../S.cervisiae.REU13/yeast.sim.fasta"
 genome="../S.cervisiae.REU13/section1.fasta"
 #
 #empphi="../data/ecoli_X_obs.csv"
-#empphi="../S.cervisiae.REU13/yeast.sim.Xobs.csv"
 empphi="../S.cervisiae.REU13/section1.csv"
 #
 #prefix="ecoli_fits_" # change name
-prefix="yeast_NSEfits2_" # change name
+prefix="yeast_NSEfits_" # change name
 #prefix="without_xobs_" # change name
 suffix="singlechain"
 folder="../results/conv_test/" # change folder

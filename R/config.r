@@ -40,7 +40,11 @@ print.config <- function(config)
 
 
 config <- list(
-  n.samples = 10000,  # number of samples between convergence checks.
+  delta.a_12 = 0,
+  a_2 = 4,
+
+  n.samples = 1000,  # number of samples between convergence checks.
+    #Set equal to max/min samples to avoid resetting the scale
   use.n.samples = 200, #sample size for testing for convergence. 
 #  n.samples = 1000,  # number of samples between convergence checks.
 #  use.n.samples = 1000, #sample size for testing for convergence. 
@@ -50,15 +54,15 @@ config <- list(
   n.cores = 1, # total num of cpu cores (should be about 5*n.chains when using parallel method other then "lapply")
   selected.env = 1, # deprecated (us if more than one dataset is stored in csv, e.g. different conditions)
 
-  min.samples=10000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
-  max.samples=10000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
+  min.samples=1000, # minimum samples each chain has to do, convergence criterium is ignored until min.iter is reached 
+  max.samples= 1000, # maximum samples for each chain. MCMC will be stoped if the chain reached max.iter iterations (convergence criterium is ignored)
 
   reset.qr=0, # stop resetting qr matrix when checking for convergence after this many samples (after thining)
   conv.thin=1,  # thining for convergence test (recommend 1 if chain.thin != 1, otherwise double thining)
   chain.thin=10, # thining of the chain during runtime. This is done before gathering convergence test sample. See note for conv.thin.
   rm.first.aa=0, # remove first rm.first.aa AAs (after the first codon which is expected to be the start codon)
   rm.short=0, # # ignore sequences with length < rm.short AAs after the first rm.first.aa AAs are removed
-  parallel="lapply", # parallel method within chain 
+  parallel="mclapply", # parallel method within chain 
                      # lapply = no parallelization within chain)
                      # mclapply = parallelization within chain.
 		                 # Other options are also possible.

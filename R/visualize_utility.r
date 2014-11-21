@@ -1,7 +1,8 @@
 plot.likelihood.trace <- function(chain, data, windowsize)
 { 
   
-  logTraces <- get.logL(chain, data)
+  #logTraces <- get.logL(chain, data)
+  logTraces <- unlist(chain$logL.Mat)
   ll <- format(mean(as.numeric(logTraces[(length(logTraces)-windowsize):length(logTraces)])), digits = 10)
   plot(1:length(logTraces), logTraces, 
        main=ll, xlab="Iteration", ylab="LogL", type="l")

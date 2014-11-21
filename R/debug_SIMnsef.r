@@ -67,7 +67,7 @@ if(debug.code){
   sdlog.phi.init <- c(0.5,1,2,4) # has to be non 0 for cubappr
   fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
   fn.phi.in <- "../data/ecoli_X_obs.csv"
-  fname <- "test"
+  fname <- "debugNseYeast"
   out.folder <- "../results/test/"
   fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
   fn.out <- paste(out.folder, fname, ".dat", sep="")
@@ -231,6 +231,7 @@ runtime.info <- system.time(
                                reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
                                nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
                                model="nsef", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               #model="nsef", adaptive="none", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
       }else{
 	.CF.CT$model <- "nsef";	#added by Logan LOGAN logan
         results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 

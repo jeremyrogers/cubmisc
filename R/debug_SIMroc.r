@@ -121,7 +121,7 @@ sdlog.phi.init <- c(0.5,1,2,4)
 cubmethods <- "cubfits"
 fn.in <- "../S.cervisiae.REU13/section1.fasta"
 fn.phi.in <- "../S.cervisiae.REU13/section1.csv"
-fname <- "sim.nsef.debug"
+fname <- "debugRocYeast"
 out.folder <- "../results/test/"
 fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
 fn.out <- paste(out.folder, fname, ".dat", sep="")

@@ -6,12 +6,12 @@ source("config.r")
 
 model <- 'nse';              #nse \ roc
 
-genome <- 'brewYeast';       #ecoli  \ REUyeast \ pYeast \ brewYeast
+genome <- 'brewYeast';       #ecoli \ REUyeast \ pYeast \ brewYeast
 prefix <- "11-17"            #generally, date the run started in "MM-DD" format
 suffix <- "FULL"             #What was special about this run?
 
 delta_a12 <- 0
-a_2 <- 1
+a_2 <- 4
   
 
 if(tolower(genome)=="ecoli"){
@@ -112,7 +112,8 @@ if(simulated_data){
   colnames(mu) <- c("'true' deltaM", "estimated deltaM"
                     ,paste("Lower ", ci, "%ci", sep="") , paste("Upper ", ci, "%ci", sep="")
   )
-  mu[,1] <- -1 * mu_true[[3]];
+#  mu[,1] <- -1 * mu_true[[3]];
+  mu[,1] <- mu_true[[3]];
   #The mu values used to generate preston's yeast are flipped in the code due to the deltaEta switch, which he wasn't there for  
   vec <- grep("mu", names(chain$b.Mat[[1]]))
   tmpmu <- matrix(ncol=chunksize, nrow=length(vec))
@@ -195,9 +196,9 @@ if(prefix == "w_o")
 dev.off()
 
 ### Log Likelihood 
-#  pdf(paste(result.folder, prefix, "_logL_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
-#  ll <- plot.likelihood.trace(chain, data, config$use.n.samples)
-#  dev.off()
+  pdf(paste(result.folder, prefix, "_logL_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
+  ll <- plot.likelihood.trace(chain, data, config$use.n.samples)
+  dev.off()
 }
 
 #### PLOT CUB
@@ -205,6 +206,7 @@ dev.off()
 pdf(paste(result.folder, prefix, "_CUB_obs_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 plotCUB(data$reu13.df, chain$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2], rescale=T,
         model.label="MCMC Posterior", main="CUB binning of observed phi"
+        #,model='nse'
         ,delta_a12=delta_a12, a_2=a_2
         )
 dev.off()
@@ -214,7 +216,8 @@ names(bin.phis) <- names(emp)
 pdf(paste(result.folder, prefix, "_CUB_est_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 plotCUB(data$reu13.df, chain$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
         model.label="MCMC Posterior", main="CUB binning of estimated phi"
-        ,model=model,delta_a12=delta_a12, a_2=a_2
+        #,model=model
+        ,delta_a12=delta_a12, a_2=a_2
         )
 dev.off()
 

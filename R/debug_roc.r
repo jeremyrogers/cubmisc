@@ -121,7 +121,7 @@ sdlog.phi.init <- c(0.5,1,2,4)
 cubmethods <- "cubfits"
 fn.in <- "../data/ecoli_K12_MG1655_genome_filtered.fasta"
 fn.phi.in <- "../data/ecoli_X_obs.csv"
-fname <- "test"
+fname <- "debugRocEcoli"
 out.folder <- "../results/test/"
 fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
 fn.out <- paste(out.folder, fname, ".dat", sep="")
