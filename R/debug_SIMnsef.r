@@ -120,11 +120,21 @@ sdlog.phi.init <- c(0.5,1,2,4)
 ########		set by Logan		##########
 ##########################################################
 #
+suffix <- "4a2.Mflip"
+if(config$parallel == "mclapply"){
+  options("mc.cores"=4);
+  cat("number of mclapply cores is ", getOption("mc.cores", 2L), "\n");
+}
+cat("delta a_12 is ", config$delta.a_12, "\n");
+cat("a_2 is ", config$a_2, "\n");
 cubmethods <- "cubfits"
-fn.in <- "../S.cervisiae.REU13/section1.fasta"
-fn.phi.in <- "../S.cervisiae.REU13/section1.csv"
-fname <- "sim.nsef.debug"
-out.folder <- "../results/test/"
+#fn.in <- "../S.cervisiae.REU13/section1.fasta"
+#fn.phi.in <- "../S.cervisiae.REU13/section1.csv"
+fn.in <- "../S.cervisiae.REU13/yeast.sim.fasta"
+fn.phi.in <- "../S.cervisiae.REU13/yeast.sim.Xobs.csv"
+fname <- paste("REUyeast.nse.", suffix, sep = "");
+out.folder <- paste("../results/ny/", substr(Sys.Date(), 6, 10), "/",sep="")
+if(!file.exists(out.folder)){	dir.create(file.path(out.folder));	}
 fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
 fn.out <- paste(out.folder, fname, ".dat", sep="")
 #
@@ -266,7 +276,12 @@ runtime.info <- system.time(
 
 )###END SYSTEM TIMING 
 
-cat(paste("Elapsed time for", config$n.chains, "chains doing", config$n.iter, "iterations on", config$n.cores, "cores was", round(runtime.info["elapsed"]/60, digits=2), "min\n" ))
+rundetails <- paste(config$n.chains, "chains doing", config$n.iter, "iterations on", config$n.cores, "cores")
+if(config$parallel=="mclapply"){ 
+	rundetails <- paste(rundetails, "and", getOption("mc.cores", 2L), "cores in each chain");
+}
+cat(paste("Elapsed time for", rundetails, "was", round(runtime.info["elapsed"]/60, digits=2), "min\n" ))
+rm(rundetails)
 seq.string.names <- names(seq.string)
 rm("seq.string")
 

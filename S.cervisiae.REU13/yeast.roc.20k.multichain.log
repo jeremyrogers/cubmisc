@@ -1,0 +1,432 @@
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-08-27 16:29:16 
+using cubappr 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+Error in file(con, "r") : cannot open the connection
+Calls: readGenome -> read.seq -> <Anonymous> -> readLines -> file
+In addition: Warning message:
+In file(con, "r") :
+  cannot open file '../data/ecoli_K12_MG1655_genome_filtered.fasta': No such file or directory
+Execution halted
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-08-27 17:00:54 
+using cubappr 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+	 with seeds: 15989 42326 78571 48132
+Loading required package: Rmpi
+Error : .onLoad failed in loadNamespace() for 'Rmpi', details:
+  call: dyn.load(file, DLLpath = DLLpath, ...)
+  error: unable to load shared object '/usr/lib/R/site-library/Rmpi/libs/Rmpi.so':
+  libmpi.so.0: cannot open shared object file: No such file or directory
+Error in makeMPIcluster(spec, ...) : 
+  the `Rmpi' package is needed for MPI clusters.
+Calls: system.time -> cubmultichain -> makeCluster -> makeMPIcluster
+Timing stopped at: 0.011 0.002 0.016 
+Execution halted
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubfits -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -p ../data/ecoli_X_obs.csv -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-08-29 14:30:40 
+using cubfits 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubfits -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -p ../data/ecoli_X_obs.csv -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-08-29 14:30:55 
+using cubfits 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+reading gene expression measurements (Xobs) from file
+ ../data/ecoli_X_obs.csv 
+and compare to ORF list from FASTA file
+ ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+reading gene expression measurements (Xobs) from file
+ ../data/ecoli_X_obs.csv 
+and compare to ORF list from FASTA file
+ ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubfits -s 0.5 1 2 4 -f ../data/ecoli_K12_MG1655_genome_filtered.fasta -p ../data/ecoli_X_obs.csv -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 500 
+Min samples: 5000 
+Max samples: 15000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-08-29 14:31:19 
+using cubfits 
+reading sequences from file ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+reading gene expression measurements (Xobs) from file
+ ../data/ecoli_X_obs.csv 
+and compare to ORF list from FASTA file
+ ../data/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubfits using cubmultichain 
+	 with seeds: 37540 26951 1131 63390
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubfits using cubmultichain 
+	 with seeds: 63206 85120 38177 19800
+Loading required package: Rmpi
+Error in { : 
+  task 1 failed - "NAs are not allowed in subscripted assignments"
+Calls: system.time -> cubmultichain -> %dopar% -> <Anonymous>
+Timing stopped at: 7.095 3.691 10.923 
+Execution halted
+	4 slaves are spawned successfully. 0 failed.
+Error in { : 
+  task 1 failed - "NAs are not allowed in subscripted assignments"
+Calls: system.time -> cubmultichain -> %dopar% -> <Anonymous>
+Timing stopped at: 7.183 3.859 11.209 
+Execution halted
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubfits using cubmultichain 
+	 with seeds: 4388 25112 53140 39698
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+Error in { : 
+  task 1 failed - "NAs are not allowed in subscripted assignments"
+Calls: system.time -> cubmultichain -> %dopar% -> <Anonymous>
+Timing stopped at: 7.665 4.185 11.963 
+Execution halted
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubfits -s 0.5 1 2 4 -f ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta/ -p ../data/yeast_X_obs.csv -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 1000 
+Min samples: 5000 
+Max samples: 20000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+started at: 2014-09-15 14:16:57 
+using cubfits 
+reading sequences from file ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta/ 
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubfits -s 0.5 1 2 4 -f ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta -p ../data/yeast_X_obs.csv -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 1000 
+Min samples: 5000 
+Max samples: 20000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+started at: 2014-09-15 14:17:45 
+using cubfits 
+reading sequences from file ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta 
+reading gene expression measurements (Xobs) from file
+ ../data/yeast_X_obs.csv 
+and compare to ORF list from FASTA file
+ ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta 
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_roc.r -c cubappr -s 0.5 1 2 4 -f ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta -o ../results/conv_test/ -n without_xobs_multichain_lapply_4cores -i woxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 1000 
+Min samples: 5000 
+Max samples: 20000 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 4 
+Number of Chains: 4 
+Parallel mode within chain: lapply 
+Samples used: 1000 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Gelman & Rubin
+Convergence criterium: Gelman Score < 0.15 
+Use every 1 sample for convergence test
+
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+Warning message:
+In read.table(opt$pinit, header = F, sep = ",") :
+  incomplete final line found by readTableHeader on 'woxobs_pinit.csv'
+started at: 2014-09-15 14:46:31 
+using cubappr 
+reading sequences from file ../S.cervisiae.REU13/S.cerevisiae.S288c.REU.sim.b-0.001.ces.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+	- 1 
+	- 2 
+	- 4 
+running cubappr using cubmultichain 
+	 with seeds: 61759 57221 30419 36143
+Loading required package: Rmpi
+	4 slaves are spawned successfully. 0 failed.
+Error in { : 
+  task 1 failed - "NAs are not allowed in subscripted assignments"
+Calls: system.time -> cubmultichain -> %dopar% -> <Anonymous>
+Timing stopped at: 4051.866 3074.9 7126.418 
+Execution halted
