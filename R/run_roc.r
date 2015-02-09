@@ -13,7 +13,7 @@ if(sum(check.pack) != length(check.pack))
 
 
 #suppressMessages(library(cubfits, quietly = TRUE))
-suppressMessages(library(cubfits, lib.loc="~/cubfitsROCdebug", quietly = TRUE))
+suppressMessages(library(cubfits, lib.loc="~/cubfitsBuild/", quietly = TRUE))
 suppressMessages(library(psych, quietly = TRUE))
 ##suppressMessages(library(Rmisc, quietly = TRUE))
 suppressMessages(library(getopt, quietly = TRUE))

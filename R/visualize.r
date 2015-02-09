@@ -1,4 +1,5 @@
-library(cubfits, quietly = TRUE, lib.loc = "~/cubfitsNSEdebug/")
+#library(cubfits, quietly = TRUE, lib.loc = "~/cubfitsNSEdebug/")
+library(cubfits, quietly = TRUE, lib.loc = "~/cubfitsBuild/")
 setwd("~/cubfits/misc/R/")
 source("visualize_utility.r")
 source("run_utility.r")
@@ -7,11 +8,11 @@ source("config.r")
 model <- 'nse';              #nse \ roc
 
 genome <- 'loganYeast';       #ecoli \ REUyeast \ pYeast \ brewYeast \ loganYeast
-prefix <- "12-10"            #generally, date the run started in "MM-DD" format
-suffix <- "short"             #What was special about this run?
+prefix <- "02-02"            #generally, date the run started in "MM-DD" format
+suffix <- "NoPhi"            #What was special about this run?
 
 delta_a12 <- 0
-a_2 <- 4
+a_2 <- 1
   
 
 if(tolower(genome)=="ecoli"){
@@ -19,7 +20,7 @@ if(tolower(genome)=="ecoli"){
 
 #### read data
   result.folder <- paste("../results/test/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", sep="")
-  load(paste(result.folder, paste("debug", model, genome, ".dat", sep="")))
+  load(paste(result.folder, "debug", model, genome, ".dat", sep=""))
   estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
   seq.string <- readGenome("../data/ecoli_K12_MG1655_genome_filtered.fasta", config$rm.short, config$rm.first.aa)
   emp <- read.empirical.data("../data/ecoli_X_obs.csv", seq.string, config$selected.env, th=0)
@@ -29,10 +30,12 @@ if(tolower(genome)=="reuyeast"){
 
 #### read data
   result.folder <- paste("../results/ny/", prefix, "/", sep="")
-  load(paste(result.folder, "REU.nse.", suffix, ".dat", sep=""))
-  estm.phi <- read.csv(paste(result.folder, "REU.nse.", suffix, ".phi", sep=""))
-  seq.string <- readGenome("../S.cervisiae.REU13/section1.fasta", config$rm.short, config$rm.first.aa)
-  emp <- read.empirical.data("../S.cervisiae.REU13/section1sorted.csv", seq.string, config$selected.env, th=0)
+  load(paste(result.folder, "REUyeast.nse.", suffix, ".dat", sep=""))
+  estm.phi <- read.csv(paste(result.folder, "REUyeast.nse.", suffix, ".phi", sep=""))
+  seq.string <- readGenome("../S.cervisiae.REU13/yeast.sim.fasta", config$rm.short, config$rm.first.aa)
+  emp <- read.empirical.data("../S.cervisiae.REU13/yeast.sim.Xobs.csv", seq.string, config$selected.env, th=0)
+  #seq.string <- readGenome("../S.cervisiae.REU13/section1.fasta", config$rm.short, config$rm.first.aa)
+  #emp <- read.empirical.data("../S.cervisiae.REU13/section1sorted.csv", seq.string, config$selected.env, th=0)
 
 
   omega_true <- read.table("../S.cervisiae.REU13/scaled_omega.csv", header=TRUE)
@@ -66,11 +69,22 @@ if(tolower(genome)=="loganyeast"){
     load(paste(result.folder, genome, ".", model, ".", suffix, ".dat" , sep=""))
     estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
     
-    seq.string <- readGenome("../loganYeast/loganNewYeast.fasta", config$rm.short, config$rm.first.aa)
-    omega_true <- read.table("../prestonYeast/scaled_omega.csv", header = TRUE)
-    
-    #seq.string <- readGenome("../loganYeast/loganModdedYeast.fasta", config$rm.short, config$rm.first.aa)
-    #omega_true <- read.table("../loganYeast/codonData/NSE_pr/modded_omega.csv", header = TRUE)
+    if(suffix=="Cubfits1"){
+      seq.string <- readGenome("../loganYeast/CubfitsValues1.fasta", config$rm.short, config$rm.first.aa)
+      omega_true <- read.table("../loganYeast/codonData/modded_omega.csv", header = TRUE)
+    }
+    else if(suffix=="Cubfits2"){
+      seq.string <- readGenome("../loganYeast/CubfitsValues2.fasta", config$rm.short, config$rm.first.aa)
+      omega_true <- read.table("../loganYeast/codonData/modded_omega.csv", header = TRUE)
+    }
+    else if(suffix=="Preston2"){
+      seq.string <- readGenome("../loganYeast/PrestonValues2.fasta", config$rm.short, config$rm.first.aa)
+      omega_true <- read.table("../loganYeast/codonData/S.cerevisiae.2007.omega.csv", header = TRUE)
+    }
+    else{
+      seq.string <- readGenome("../loganYeast/PrestonValues1.fasta", config$rm.short, config$rm.first.aa)
+      omega_true <- read.table("../loganYeast/codonData/S.cerevisiae.2007.omega.csv", header = TRUE)
+    }
     
     emp <- read.empirical.data("../loganYeast/pyeast.phi.tsv", seq.string, config$selected.env, th=0)
     mu_true <- read.table("../prestonYeast/scaled_logMu.csv", header = TRUE)
@@ -82,8 +96,9 @@ if(tolower(genome)=="brewyeast"){
   simulated_data <- FALSE;
   
   #### read data
-#  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", sep="")
-  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", suffix, "/", sep="")
+  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", sep="")
+  #result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", suffix, "/", sep="")
+  
   load(paste(result.folder, genome, ".", model, ".", suffix, ".dat" , sep=""))
   estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
   
@@ -95,6 +110,10 @@ if(tolower(genome)=="brewyeast"){
   ###this needs to be fixed!!!
 }
 
+Prefix <- suffix;
+suffix <- prefix;
+prefix <- Prefix;
+rm(Prefix)
 
 emp <- emp$empirical[names(emp$empirical) %in% estm.phi[, 1]]
 
@@ -156,6 +175,7 @@ pdf(paste(result.folder, prefix, "_codonParameters_", suffix, ".pdf", sep = ""),
 par(mfrow=c(2,1))
 reg <- lm(omega[,2]~omega[,1]);
 plot(omega, main=expression(paste("'true' ",Delta,omega," vs Estimated ",Delta,omega))
+     #,ylim=range(omega)
      ,ylim=range(omega[,3:4])
      ,xlab=expression(paste("'true' ", Delta, omega))
      ,ylab=expression(paste("estimated ", Delta, omega))
@@ -171,7 +191,8 @@ legend("bottomright", legend = c("1-1 line", "Linear Fit Line", paste(100*ci, "%
 ###Plot Mu
 reg <- lm(mu[,2]~mu[,1]);
 plot(mu, main=expression(paste("'true' ",Delta,"M vs Estimated ",Delta,"M"))
-     ,ylim=range(mu[,3:4])
+     #,ylim=range(mu)
+     ##,ylim=range(mu[,3:4])
      ,xlab=expression(paste("'true' ", Delta, "M"))
      ,ylab=expression(paste("estimated ", Delta,"M"))
      ,sub=paste("R^2=", format(summary(reg)$r.squared, digits = 3), sep="")
@@ -193,14 +214,15 @@ pdf(paste(result.folder, prefix, "_logmu_", suffix, ".pdf", sep = ""), width = 1
 plotTraces(chain$b.Mat, config$aa, param="logmu", main=paste("AA parameter trace ", prefix, sep=""))
 dev.off()
  
-pdf(paste(result.folder, prefix, "_deltaeta_", suffix, ".pdf", sep = ""), width = 12, height = 11)
+if(model=="nse"){ symbol <- "omega" } else{ symbol <- "eta" }
+pdf(paste(result.folder, prefix, "_delta", symbol, "_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 #plotTraces(data.set$res[[1]]$b.Mat, config$aa, param="deltaeta", main=paste("AA parameter trace ", prefix, sep=""))
-plotTraces(chain$b.Mat, config$aa, param="deltaeta", main=paste("AA parameter trace ", prefix, sep=""))
+plotTraces(chain$b.Mat, config$aa, param=paste("delta", symbol, sep=""), main=paste("AA parameter trace ", prefix, sep=""))
 dev.off()
 
 interval <- (length(chain$b.Mat)-config$use.n.samples):length(chain$b.Mat)
-pdf(paste(result.folder, prefix, "_deltaeta_histogram_", suffix, ".pdf", sep = ""), width = 12, height = 11)
-plotBMatrixPosterior(chain$b.Mat, config$aa, interval, param="deltaeta", main=paste("AA parameter histogram", prefix, sep=""), nclass=100, center=T)
+pdf(paste(result.folder, prefix, "_delta", symbol, "_histogram_", suffix, ".pdf", sep = ""), width = 12, height = 11)
+plotBMatrixPosterior(chain$b.Mat, config$aa, interval, param=paste("delta", symbol, sep=""), main=paste("AA parameter histogram", prefix, sep=""), nclass=100, center=T)
 dev.off()
 
 pdf(paste(result.folder, prefix, "_logmu_histogram_", suffix, ".pdf", sep = ""), width = 12, height = 11)
@@ -214,7 +236,7 @@ plotPTraces(chain$p.Mat)
 dev.off()
 
 pdf(paste(result.folder, prefix, "_expPhi_trace_", suffix, ".pdf", sep = ""), width = 6, height = 4)
-if(prefix == "w_o")
+if(prefix == "w_o" || prefix=="NoPhi")
 {
   #plotExpectedPhiTrace(data.set$res[[1]]$phi.pred.Mat)
   plotExpectedPhiTrace(chain$phi.pred.Mat)
@@ -246,29 +268,29 @@ for(ii in 0:3){
 #### PLOT CUB
 {
 pdf(paste(result.folder, prefix, "_CUB_obs_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
-plotCUB(data$reu13.df, chain$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2], rescale=T,
-        model.label="MCMC Posterior", main="CUB binning of observed phi"
-        #,model='nse'
-        ,delta_a12=delta_a12, a_2=a_2
-        )
+#plotCUB(data$reu13.df, chain$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2],# rescale=T,
+plotCUB.NSE(data$reu13.df, bMat=chain$b.Mat, phi.bin=emp,
+        model.label="MCMC Posterior", main="CUB binning of observed phi", delta_a12=delta_a12, a_2=a_2,
+        weightedCenters=TRUE, logBins=TRUE)
 dev.off()
 
 bin.phis <- estm.phi[estm.phi[, 1] %in% names(emp), 2]
 names(bin.phis) <- names(emp)
 pdf(paste(result.folder, prefix, "_CUB_est_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
-plotCUB(data$reu13.df, chain$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
+#plotCUB(data$reu13.df, chain$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
+plotCUB.NSE(data$reu13.df, bMat=chain$b.Mat, phi.bin=bin.phis,
         model.label="MCMC Posterior", main="CUB binning of estimated phi"
-        #,model=model
         ,delta_a12=delta_a12, a_2=a_2
+        ,weightedCenters=TRUE, logBins=TRUE
         )
 dev.off()
 
 pdf(paste(result.folder, prefix, "_vs_obs_phi_", suffix , ".pdf", sep = ""), width = 10, height = 10)
 reg <- lm(log10(estm.phi[estm.phi[, 1] %in% names(emp), 2])~log10(emp))
 plot(log10(emp), log10(estm.phi[estm.phi[, 1] %in% names(emp), 2]), 
-     main=expression(paste("Estim. ", phi, " vs. 'true'", phi)),
+     main=expression(paste("Estimated ", phi, " vs. Observed", phi)),
      sub=paste("R^2=", format(summary(reg)$r.squared, digits = 3), sep=""), 
-     xlab=expression(paste("'true' ", phi, " (log10)")), ylab=expression(paste("Est. ", phi, " (log10)")))
+     xlab=expression(paste("Observed ", phi, " (log10)")), ylab=expression(paste("Est. ", phi, " (log10)")))
 abline(reg, col="red", lwd=2)
 dev.off()
 

@@ -120,14 +120,15 @@ sdlog.phi.init <- c(0.5,1,2,4)
 ########		set by Logan		##########
 ##########################################################
 #
-suffix <- "full.4a2.Mflip"
+suffix <- "nophi"
 if(config$parallel == "mclapply"){
-  options("mc.cores"=8);
+  options("mc.cores"=6);
   cat("number of mclapply cores is ", getOption("mc.cores", 2L), "\n");
 }
 cat("delta a_12 is ", config$delta.a_12, "\n");
 cat("a_2 is ", config$a_2, "\n");
-cubmethods <- "cubfits"
+#cubmethods <- "cubfits"
+cubmethods <- "cubappr"
 fn.in <- "../brewersYeast/s288c.genome.fasta"
 fn.phi.in <- "../brewersYeast/yassour2009.phi.tsv"
 fname <- paste("brewYeast.nse.", suffix, sep = "");
@@ -135,6 +136,9 @@ out.folder <- paste("../results/nb/", substr(Sys.Date(), 6, 10), "/",sep="")
 if(!file.exists(out.folder)){	dir.create(file.path(out.folder));	}
 fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
 fn.out <- paste(out.folder, fname, ".dat", sep="")
+
+#opt$pinit <- "wxobs_pinit.csv"
+opt$pinit <- "woxobs_pinit.csv"
 #
 ##########################################################
 ######## 	End switching comments		##########

@@ -41,7 +41,7 @@ cat("===========================================================================
 cat("================================ START HEADER =====================================\n")
 cat("===================================================================================\n")
 args <- commandArgs(trailingOnly = TRUE)
-cat("Function call:\nsource(\"run_pYeast\") ");cat(args);cat("\n\n")
+cat("Function call:\nsource(\"run_loganYeast\") ");cat(args);cat("\n\n")
 
 opt <- getopt(spec, args)
 ## print config file to log
@@ -57,48 +57,52 @@ cat("===========================================================================
 ######## If commented, uncomment, else comment  ##########
 ######## In vim,                                ##########
 ######## reset to normal with the following commands
-######## :107,129s/^/#debug#/
-######## :107,129s/#debug##run#//
-######## :107,129s/#debug####/###/
+######## :70,101s/^/#debug#/
+######## :70,101s/#debug##run#//
+######## :70,101s/#debug####/###/
 ########
 ######## set to debug with the following commands       
-######## :107,129s/^/#run#/
-######## :107,129s/#run##debug#//
-######## :107,129s/#run####/###/
+######## :70,101s/^/#run#/
+######## :70,101s/#run##debug#//
+######## :70,101s/#run####/###/
 ########
 ##########################################################
 sdlog.phi.init <- c(0.5,1,2,4)
-#run#  sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
+#run#sdlog.phi.init <- as.double(unlist(strsplit(sdlog.phi.init, " ")))
   ## set method for either with Xobs, cubfits, or without Xobs, cubappr,
   ## NOTE: cross validation approach, cubpred, is not supported in this script
-#run#  cubmethods <- opt$cubmethod
-#run#  fn.in <- opt$fnin
-#run#  fn.phi.in <- opt$fnpin
-#run#  fname <- opt$fname
-#run#  out.folder <- opt$fnout
-#run#  fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
-#run#  fn.out <- paste(out.folder, fname, ".dat", sep="")
+#run#cubmethods <- opt$cubmethod
+#run#fn.in <- opt$fnin
+#run#fn.phi.in <- opt$fnpin
+#run#fname <- opt$fname
+#run#out.folder <- opt$fnout
+#run#fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
+#run#fn.out <- paste(out.folder, fname, ".dat", sep="")
 #
 ##########################################################
 ########		set by Logan		##########
 ##########################################################
 #
-suffix <- "PrestonValues"
+suffix <- "noPhi"
 if(config$parallel == "mclapply"){
-  options("mc.cores"=8);
+  options("mc.cores"=6);
   cat("number of mclapply cores is ", getOption("mc.cores", 2L), "\n");
 }
 cat("delta a_12 is ", config$delta.a_12, "\n");
 cat("a_2 is ", config$a_2, "\n");
 cubmethods <- "cubfits"
-fn.in <- "../loganYeast/loganNewYeast.fasta"
-fn.phi.in <- "../loganYeast/pyeast.phi.tsv"
+fn.in <- "../loganYeast/PrestonValues1.fasta"
+fn.phi.in <- "../loganYeast/cubappr.tsv"
 fname <- paste("loganYeast.nse.", suffix, sep = "");
-out.folder <- paste("../results/nl/", substr(Sys.Date(), 6, 10), "/",sep="")
-if(!file.exists(out.folder)){	dir.create(file.path(out.folder));	}
+##out.folder <- paste("../results/nl/", substr(Sys.Date(), 6, 10), "/",sep="")
+out.folder <- paste("../results/nl/", substr(Sys.Date(), 6, 10), "/", suffix, "/", sep="")
+if(!file.exists(out.folder)){	dir.create(file.path(out.folder), recursive = TRUE);	}
 fn.phi.out <- paste(out.folder, fname, ".phi", sep="")
 fn.out <- paste(out.folder, fname, ".dat", sep="")
 cat("Writing to ", fn.out, " and ", fn.phi.out, "\n");
+
+opt$pinit <- "wxobs_pinit.csv"
+#opt$pinit <- "woxobs_pinit.csv"
 #
 ##########################################################
 ######## 	End switching comments		##########
