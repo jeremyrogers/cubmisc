@@ -13,7 +13,7 @@ if(sum(check.pack) != length(check.pack))
 
 
 #suppressMessages(library(cubfits, quietly = TRUE))
-suppressMessages(library(cubfits, lib.loc="~/cubfitsBuild/", quietly = TRUE))
+library(cubfits, lib.loc="~/cubfitsBuild")
 suppressMessages(library(psych, quietly = TRUE))
 ##suppressMessages(library(Rmisc, quietly = TRUE))
 suppressMessages(library(getopt, quietly = TRUE))
@@ -189,10 +189,14 @@ runtime.info <- system.time(
       {
         results <- cubsinglechain(cubmethods, frac1=config$frac1, frac2=config$frac2, 
                                reset.qr=config$reset.qr, seed=seeds[1], teston="sphi",
-                               min=config$min.samples, max=config$max.samples, conv.thin=config$conv.thin, eps=config$eps, 
-                               reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, n=data$n, phi.Init=init.phi[[1]],
-                               nIter=iterations, p.Init=p.init[[1]], iterThin=config$chain.thin,
-                               model="roc", adaptive="simple", .CF.CT=.CF.CT, .CF.CONF=.CF.CONF)
+                               min=config$min.samples, max=config$max.samples, 
+			       conv.thin=config$conv.thin, eps=config$eps, 
+                               reu13.df.obs=data$reu13.df, phi.Obs=phi.obs, y=data$y, 
+			       n=data$n, phi.Init=init.phi[[1]],
+                               nIter=iterations, p.Init=p.init[[1]], 
+   			       iterThin=config$chain.thin,
+                               model="roc", adaptive="simple", .CF.CT=.CF.CT, 
+			       .CF.CONF=.CF.CONF)
       }else{
         results <- cubmultichain(cubmethods, reset.qr=config$reset.qr, seeds=seeds, teston="sphi", 
                                swap=config$swap, swapAt=config$swapAt, min=config$min.samples, max=config$max.samples, 

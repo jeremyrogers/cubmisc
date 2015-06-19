@@ -1,0 +1,1675 @@
+===================================================================================
+================================ START HEADER =====================================
+===================================================================================
+Function call:
+Rscript run_nsef.r -c cubfits -s 0.5 1 2 4 -f ../K12_genome/Genome/ecoli_K12_MG1655_genome_filtered.fasta -p ../K12_genome/Genome/ecoli_X_obs.csv -o ../results/ -n ecoliwithPhi -i wxobs_pinit.csv
+
+MCMC parameters:
+Number of samples between checks: 750 
+Min samples: 750 
+Max samples: 750 
+Reset QR until: 0 samples
+Thining: store every 10 iteration as sample
+Swap 0 % of b matrix
+Swap b matrix if L1-norm is < 0 
+
+Simulation parameters
+Number of Cores 5 
+Number of Chains: 1 
+Parallel mode within chain: mclapply 
+Samples used: 150 
+First 0  AAs removed from sequence
+Sequences with less than 0 AAs ignored
+List of AAs taken into account:
+	A C D E F G H I K L M N P Q R S T V W Y Z
+
+Convergence criteria
+Convergence test: Geweke
+Convergence criterium: Z Score < 0.15 
+% chain used at the begining: 0.1 
+% chain used at the end: 0.5 
+Use every 1 sample for convergence test
+
+Called from: top level 
+===================================================================================
+================================= END HEADER ======================================
+===================================================================================
+
+
+started at: 2015-05-18 15:04:57 
+using cubfits 
+reading sequences from file ../K12_genome/Genome/ecoli_K12_MG1655_genome_filtered.fasta 
+reading gene expression measurements (Xobs) from file
+ ../K12_genome/Genome/ecoli_X_obs.csv 
+and compare to ORF list from FASTA file
+ ../K12_genome/Genome/ecoli_K12_MG1655_genome_filtered.fasta 
+generating list of codon position in ORFs for each AA...
+generating list of number of AA occurences per ORF...
+generating list of codon counts per ORF...
+generate initial phi using SCUO with sd(ln(phi)) values
+	- 0.5 
+running cubfits using cubsinglechain 
+	 with seeds: 35866
+Running in parallel mode mclapplyp.DrawScale is 0.1- b: rbind(curr.scale, curr.accept)
+            [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+curr.scale  1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00  1.00  1.00  1.00
+curr.accept 0.15 0.34 0.34 0.29 0.27 0.17 0.38 0.23 0.31  0.12  0.31  0.15
+            [,13] [,14] [,15] [,16] [,17] [,18] [,19]
+curr.scale   1.00  1.00  1.00  1.00   1.0  1.00  1.00
+curr.accept  0.29  0.12  0.15  0.19   0.2  0.31  0.28
+- b: rbind(curr.scale, curr.accept)
+            [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+curr.scale  0.80 1.20 1.20 1.00 1.00 0.80 1.20 1.00 1.20  0.80  1.20   0.8
+curr.accept 0.06 0.18 0.25 0.25 0.23 0.07 0.18 0.09 0.18  0.05  0.24   0.1
+            [,13] [,14] [,15] [,16] [,17] [,18] [,19]
+curr.scale   1.00  0.80  0.80  0.80  0.80  1.20  1.00
+curr.accept  0.21  0.07  0.08  0.18  0.24  0.28  0.21
+- b: rbind(curr.scale, curr.accept)
+            [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+curr.scale  0.64 0.96 1.20 1.00  1.0 0.64 0.96 0.80 0.96  0.64  1.20  0.64
+curr.accept 0.08 0.38 0.24 0.19  0.3 0.20 0.34 0.15 0.17  0.12  0.16  0.13
+            [,13] [,14] [,15] [,16] [,17] [,18] [,19]
+curr.scale   1.00  0.64  0.64  0.64  0.80  1.20  1.00
+curr.accept  0.33  0.15  0.28  0.09  0.21  0.25  0.26
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 9, upper = 3, total = 12
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 1, total = 2
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 60, upper = 1984, total = 2044
+- b: rbind(curr.scale, curr.accept)
+             [,1]  [,2] [,3] [,4] [,5]  [,6]  [,7] [,8]  [,9] [,10] [,11] [,12]
+curr.scale  0.512 1.152 1.20 0.80 1.20 0.512 1.152 0.64 0.768 0.512  0.96 0.512
+curr.accept 0.310 0.300 0.31 0.36 0.26 0.320 0.230 0.17 0.400 0.160  0.38 0.210
+            [,13] [,14] [,15] [,16] [,17] [,18] [,19]
+curr.scale    1.2 0.512  0.64 0.512  0.80   1.2  1.00
+curr.accept   0.3 0.220  0.17 0.230  0.23   0.3  0.24
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 6, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 77, upper = 1905, total = 1982
+- b: rbind(curr.scale, curr.accept)
+              [,1]   [,2] [,3] [,4] [,5]   [,6]  [,7]  [,8]   [,9]  [,10] [,11]
+curr.scale  0.6144 1.3824 1.44 0.96 1.20 0.6144 1.152 0.512 0.9216 0.4096 1.152
+curr.accept 0.2300 0.2100 0.28 0.36 0.25 0.2300 0.350 0.290 0.4300 0.2900 0.270
+            [,12] [,13] [,14] [,15] [,16] [,17] [,18] [,19]
+curr.scale  0.512  1.44 0.512 0.512 0.512  0.80  1.44  1.00
+curr.accept 0.160  0.32 0.110 0.330 0.390  0.27  0.30  0.34
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 7, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 101, upper = 1807, total = 1908
+- b: rbind(curr.scale, curr.accept)
+              [,1]   [,2] [,3]  [,4] [,5]   [,6]   [,7]  [,8]    [,9]  [,10]
+curr.scale  0.6144 1.3824 1.44 1.152 1.20 0.6144 1.3824 0.512 1.10592 0.4096
+curr.accept 0.2700 0.2100 0.31 0.420 0.34 0.2200 0.2900 0.380 0.35000 0.2300
+            [,11]  [,12] [,13]  [,14]  [,15]  [,16] [,17] [,18] [,19]
+curr.scale  1.152 0.4096 1.728 0.4096 0.6144 0.6144  0.80 1.728  1.20
+curr.accept 0.370 0.2700 0.170 0.2000 0.3800 0.2800  0.19 0.320  0.23
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 8, total = 10
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 132, upper = 1717, total = 1849
+- b: rbind(curr.scale, curr.accept)
+              [,1]   [,2]  [,3]   [,4] [,5]   [,6]   [,7]   [,8]     [,9]
+curr.scale  0.6144 1.3824 1.728 1.3824 1.44 0.6144 1.3824 0.6144 1.327104
+curr.accept 0.3000 0.2400 0.270 0.2600 0.28 0.2600 0.2200 0.2400 0.340000
+             [,10]  [,11]  [,12]  [,13]   [,14]   [,15]  [,16] [,17]  [,18]
+curr.scale  0.4096 1.3824 0.4096 1.3824 0.32768 0.73728 0.6144  0.64 2.0736
+curr.accept 0.3600 0.3600 0.2800 0.3000 0.32000 0.27000 0.2200  0.24 0.1700
+            [,19]
+curr.scale   1.20
+curr.accept  0.37
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 5, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 1, total = 2
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 125, upper = 1560, total = 1685
+- b: rbind(curr.scale, curr.accept)
+               [,1]   [,2]  [,3]   [,4] [,5]   [,6]   [,7]   [,8]     [,9]
+curr.scale  0.73728 1.3824 1.728 1.3824 1.44 0.6144 1.3824 0.6144 1.592525
+curr.accept 0.24000 0.3400 0.290 0.3600 0.30 0.3300 0.3200 0.3900 0.320000
+              [,10]   [,11]  [,12]   [,13]    [,14]   [,15]  [,16] [,17]
+curr.scale  0.49152 1.65888 0.4096 1.65888 0.393216 0.73728 0.6144  0.64
+curr.accept 0.21000 0.22000 0.4300 0.24000 0.300000 0.13000 0.3700  0.29
+              [,18] [,19]
+curr.scale  1.65888  1.44
+curr.accept 0.29000  0.29
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 8, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 127, upper = 1308, total = 1435
+- b: rbind(curr.scale, curr.accept)
+               [,1]    [,2]  [,3]    [,4]  [,5]    [,6]    [,7]    [,8]    [,9]
+curr.scale  0.73728 1.65888 1.728 1.65888 1.728 0.73728 1.65888 0.73728 1.91103
+curr.accept 0.26000 0.29000 0.220 0.24000 0.270 0.19000 0.27000 0.31000 0.22000
+              [,10]   [,11]   [,12]   [,13]     [,14]    [,15]   [,16] [,17]
+curr.scale  0.49152 1.65888 0.49152 1.65888 0.4718592 0.589824 0.73728  0.64
+curr.accept 0.26000 0.30000 0.27000 0.25000 0.2200000 0.370000 0.20000  0.25
+              [,18] [,19]
+curr.scale  1.65888  1.44
+curr.accept 0.28000  0.30
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 2, total = 3
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 200, upper = 893, total = 1093
+- b: rbind(curr.scale, curr.accept)
+               [,1]    [,2]  [,3]    [,4]  [,5]     [,6]    [,7]     [,8]
+curr.scale  0.73728 1.65888 1.728 1.65888 1.728 0.589824 1.65888 0.884736
+curr.accept 0.27000 0.26000 0.350 0.25000 0.210 0.400000 0.31000 0.310000
+               [,9]   [,10]    [,11]   [,12]   [,13]     [,14]     [,15]
+curr.scale  1.91103 0.49152 1.990656 0.49152 1.65888 0.4718592 0.7077888
+curr.accept 0.23000 0.24000 0.250000 0.33000 0.26000 0.3200000 0.2900000
+               [,16] [,17]   [,18] [,19]
+curr.scale  0.589824  0.64 1.65888 1.728
+curr.accept 0.300000  0.32 0.30000 0.370
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 8, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 211, upper = 696, total = 907
+- b: rbind(curr.scale, curr.accept)
+               [,1]    [,2]   [,3]    [,4]  [,5]      [,6]     [,7]     [,8]
+curr.scale  0.73728 1.65888 2.0736 1.65888 1.728 0.7077888 1.990656 1.061683
+curr.accept 0.30000 0.32000 0.2800 0.31000 0.350 0.2500000 0.180000 0.150000
+               [,9]   [,10]    [,11]    [,12]   [,13]    [,14]     [,15]
+curr.scale  1.91103 0.49152 1.990656 0.589824 1.65888 0.566231 0.7077888
+curr.accept 0.26000 0.25000 0.230000 0.330000 0.29000 0.220000 0.2600000
+                [,16] [,17]    [,18]  [,19]
+curr.scale  0.7077888 0.768 1.990656 2.0736
+curr.accept 0.2600000 0.350 0.220000 0.2100
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 5, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 322, upper = 466, total = 788
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]   [,3]     [,4]   [,5]      [,6]     [,7]
+curr.scale  0.884736 1.990656 2.0736 1.990656 2.0736 0.7077888 1.592525
+curr.accept 0.240000 0.290000 0.2700 0.170000 0.1700 0.3100000 0.410000
+                 [,8]    [,9]   [,10]    [,11]     [,12]   [,13]    [,14]
+curr.scale  0.8493466 1.91103 0.49152 1.990656 0.7077888 1.65888 0.566231
+curr.accept 0.2100000 0.22000 0.16000 0.230000 0.2000000 0.24000 0.150000
+                [,15]     [,16]  [,17]    [,18]  [,19]
+curr.scale  0.7077888 0.7077888 0.9216 1.990656 2.0736
+curr.accept 0.4100000 0.2800000 0.2000 0.280000 0.1900
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 3, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 300, upper = 462, total = 762
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]   [,3]     [,4]    [,5]      [,6]    [,7]
+curr.scale  0.884736 1.990656 2.0736 1.592525 1.65888 0.8493466 1.91103
+curr.accept 0.220000 0.220000 0.2400 0.380000 0.40000 0.2400000 0.25000
+                 [,8]    [,9]    [,10]    [,11]    [,12]   [,13]     [,14]
+curr.scale  0.8493466 1.91103 0.393216 1.990656 0.566231 1.65888 0.4529848
+curr.accept 0.3200000 0.24000 0.430000 0.230000 0.320000 0.22000 0.2700000
+                [,15]     [,16]   [,17]    [,18]   [,19]
+curr.scale  0.8493466 0.7077888 0.73728 1.990656 1.65888
+curr.accept 0.2200000 0.2900000 0.26000 0.300000 0.26000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 5, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 316, upper = 410, total = 726
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]   [,3]    [,4]     [,5]      [,6]    [,7]
+curr.scale  0.884736 1.990656 2.0736 1.91103 1.990656 0.8493466 1.91103
+curr.accept 0.230000 0.180000 0.2300 0.31000 0.250000 0.1800000 0.22000
+                [,8]    [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.019216 1.91103 0.4718592 1.990656 0.6794772 1.65888 0.4529848
+curr.accept 0.150000 0.25000 0.3000000 0.180000 0.3000000 0.31000 0.3300000
+                [,15]     [,16]   [,17]    [,18]   [,19]
+curr.scale  0.8493466 0.7077888 0.73728 2.388787 1.65888
+curr.accept 0.2200000 0.3000000 0.33000 0.240000 0.28000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 4, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 376, upper = 416, total = 792
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]   [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  0.884736 1.592525 2.0736 2.293236 1.990656 0.6794772 1.91103
+curr.accept 0.250000 0.380000 0.3100 0.200000 0.270000 0.3100000 0.32000
+                 [,8]    [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  0.8153727 1.91103 0.566231 1.592525 0.8153727 1.990656 0.5435818
+curr.accept 0.3100000 0.24000 0.240000 0.330000 0.0800000 0.280000 0.2200000
+                [,15]     [,16]    [,17]    [,18]   [,19]
+curr.scale  0.8493466 0.8493466 0.884736 2.388787 1.65888
+curr.accept 0.2200000 0.2000000 0.290000 0.290000 0.27000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 6, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 308, upper = 466, total = 774
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]    [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.884736 1.91103 2.48832 1.834589 1.990656 0.8153727 2.293236
+curr.accept 0.300000 0.21000 0.27000 0.260000 0.220000 0.2400000 0.240000
+                 [,8]    [,9]    [,10]   [,11]     [,12]    [,13]     [,14]
+curr.scale  0.9784472 1.91103 0.566231 1.91103 0.6522982 1.990656 0.5435818
+curr.accept 0.2600000 0.22000 0.250000 0.31000 0.2600000 0.350000 0.2200000
+                [,15]     [,16]    [,17]    [,18]   [,19]
+curr.scale  0.8493466 0.6794772 0.884736 2.388787 1.65888
+curr.accept 0.2700000 0.3600000 0.330000 0.210000 0.28000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 4, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 283, upper = 454, total = 737
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]    [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.061683 1.91103 2.48832 1.834589 1.990656 0.8153727 2.293236
+curr.accept 0.080000 0.25000 0.19000 0.330000 0.290000 0.2900000 0.230000
+                 [,8]    [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  0.9784472 1.91103 0.566231 2.293236 0.6522982 2.388787 0.5435818
+curr.accept 0.2800000 0.21000 0.230000 0.210000 0.2400000 0.170000 0.2700000
+                [,15]     [,16]    [,17]    [,18]   [,19]
+curr.scale  0.8493466 0.8153727 1.061683 2.388787 1.65888
+curr.accept 0.3300000 0.2300000 0.350000 0.200000 0.29000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 3, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 337, upper = 425, total = 762
+- b: rbind(curr.scale, curr.accept)
+                 [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.8493466 1.91103 1.990656 2.201506 1.990656 0.8153727 2.293236
+curr.accept 0.3300000 0.23000 0.230000 0.220000 0.340000 0.2200000 0.170000
+                 [,8]    [,9]    [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  0.9784472 1.91103 0.566231 2.293236 0.6522982 1.91103 0.5435818
+curr.accept 0.3300000 0.27000 0.160000 0.310000 0.3500000 0.23000 0.1800000
+               [,15]     [,16]   [,17]   [,18]   [,19]
+curr.scale  1.019216 0.8153727 1.27402 1.91103 1.65888
+curr.accept 0.140000 0.2500000 0.15000 0.24000 0.30000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 5, total = 10
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 312, upper = 372, total = 684
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.019216 1.91103 1.990656 2.201506 2.388787 0.8153727 1.834589
+curr.accept 0.260000 0.17000 0.270000 0.180000 0.250000 0.3000000 0.330000
+                [,8]    [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.174137 1.91103 0.4529848 2.751883 0.7827578 1.91103 0.4348654
+curr.accept 0.150000 0.21000 0.3500000 0.160000 0.1900000 0.25000 0.2800000
+                [,15]     [,16]    [,17]   [,18]    [,19]
+curr.scale  0.8153727 0.8153727 1.019216 1.91103 1.990656
+curr.accept 0.2700000 0.2100000 0.180000 0.23000 0.200000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 6, upper = 2, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 360, upper = 434, total = 794
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.019216 1.528824 1.990656 1.761205 2.388787 0.9784472 2.201506
+curr.accept 0.120000 0.420000 0.280000 0.310000 0.180000 0.1500000 0.180000
+                 [,8]    [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  0.9393093 1.91103 0.5435818 2.201506 0.6262062 1.91103 0.4348654
+curr.accept 0.2900000 0.30000 0.2900000 0.230000 0.2900000 0.24000 0.3500000
+                [,15]     [,16]     [,17]   [,18]    [,19]
+curr.scale  0.8153727 0.8153727 0.8153727 1.91103 1.592525
+curr.accept 0.2900000 0.3000000 0.2900000 0.25000 0.340000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 4, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 361, upper = 406, total = 767
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.8153727 1.834589 1.990656 2.113446 1.91103 0.7827578 1.761205
+curr.accept 0.3400000 0.240000 0.240000 0.230000 0.22000 0.3200000 0.250000
+                 [,8]     [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  0.9393093 2.293236 0.5435818 2.201506 0.6262062 1.91103 0.5218385
+curr.accept 0.3600000 0.270000 0.3500000 0.180000 0.3000000 0.24000 0.2500000
+                [,15]     [,16]     [,17]   [,18]   [,19]
+curr.scale  0.8153727 0.9784472 0.8153727 1.91103 1.91103
+curr.accept 0.3100000 0.2600000 0.2600000 0.26000 0.20000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 5, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 266, upper = 515, total = 781
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.9784472 1.834589 1.990656 2.113446 1.91103 0.9393093 1.761205
+curr.accept 0.1900000 0.220000 0.300000 0.300000 0.29000 0.1600000 0.380000
+                [,8]     [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.127171 2.293236 0.6522982 1.761205 0.7514475 1.91103 0.5218385
+curr.accept 0.250000 0.170000 0.2000000 0.320000 0.2600000 0.28000 0.2400000
+                [,15]     [,16]     [,17]   [,18]    [,19]
+curr.scale  0.9784472 0.9784472 0.8153727 1.91103 1.528824
+curr.accept 0.1800000 0.1400000 0.2600000 0.33000 0.310000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 4, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 348, upper = 400, total = 748
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.7827578 1.834589 2.388787 2.536135 1.91103 0.7514475 2.113446
+curr.accept 0.2900000 0.290000 0.180000 0.230000 0.25000 0.2900000 0.350000
+                [,8]     [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.127171 1.834589 0.5218385 2.113446 0.7514475 1.91103 0.5218385
+curr.accept 0.260000 0.300000 0.2700000 0.310000 0.3500000 0.27000 0.3300000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.7827578 0.7827578 0.8153727 2.293236 1.834589
+curr.accept 0.3500000 0.3200000 0.3400000 0.160000 0.300000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 7, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 345, upper = 391, total = 736
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]    [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.7827578 1.834589 1.91103 2.536135 1.91103 0.7514475 2.536135
+curr.accept 0.3700000 0.280000 0.21000 0.230000 0.31000 0.2900000 0.280000
+                [,8]     [,9]     [,10]    [,11]    [,12]   [,13]     [,14]
+curr.scale  1.127171 2.201506 0.5218385 2.536135 0.901737 1.91103 0.6262062
+curr.accept 0.320000 0.220000 0.3500000 0.250000 0.250000 0.28000 0.1700000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.9393093 0.9784472 1.834589 2.201506
+curr.accept 0.2200000 0.2600000 0.2400000 0.310000 0.270000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 5, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 250, upper = 523, total = 773
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]    [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.9393093 1.834589 1.91103 2.536135 2.293236 0.7514475 2.536135
+curr.accept 0.2400000 0.280000 0.38000 0.280000 0.220000 0.2800000 0.230000
+                [,8]     [,9]     [,10]    [,11]    [,12]   [,13]    [,14]
+curr.scale  1.352605 2.201506 0.6262062 2.536135 0.901737 1.91103 0.500965
+curr.accept 0.210000 0.280000 0.2300000 0.200000 0.290000 0.29000 0.420000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.9393093 0.9784472 2.201506 2.201506
+curr.accept 0.2300000 0.1900000 0.2400000 0.260000 0.270000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 2, total = 3
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 332, upper = 456, total = 788
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.9393093 1.834589 2.293236 2.536135 2.293236 0.7514475 2.536135
+curr.accept 0.1700000 0.230000 0.240000 0.220000 0.270000 0.3600000 0.200000
+                [,8]     [,9]     [,10]    [,11]    [,12]   [,13]    [,14]
+curr.scale  1.352605 2.201506 0.6262062 2.028908 0.901737 1.91103 0.601158
+curr.accept 0.120000 0.210000 0.3200000 0.200000 0.180000 0.27000 0.190000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.7514475 0.9784472 2.201506 2.201506
+curr.accept 0.2200000 0.3700000 0.2300000 0.230000 0.320000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 4, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 338, upper = 374, total = 712
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.7514475 1.834589 2.293236 2.536135 2.293236 0.901737 2.028908
+curr.accept 0.4100000 0.250000 0.180000 0.210000 0.240000 0.200000 0.210000
+                [,8]     [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.082084 2.201506 0.7514475 1.623127 0.7213896 1.91103 0.4809264
+curr.accept 0.280000 0.280000 0.1400000 0.380000 0.3800000 0.39000 0.3400000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.901737 0.9784472 2.201506 2.641808
+curr.accept 0.2900000 0.230000 0.2600000 0.320000 0.190000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 6, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 372, upper = 403, total = 775
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.901737 1.834589 1.834589 2.536135 2.293236 0.7213896 2.028908
+curr.accept 0.220000 0.300000 0.440000 0.190000 0.200000 0.3200000 0.280000
+                [,8]     [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.601158 1.947752 0.8656675 2.293236 0.5771117
+curr.accept 0.280000 0.230000 0.310000 0.360000 0.1200000 0.150000 0.1800000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.901737 0.9784472 2.641808 2.113446
+curr.accept 0.2400000 0.260000 0.2900000 0.220000 0.250000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 4, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 315, upper = 423, total = 738
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.901737 2.201506 2.201506 2.028908 1.834589 0.8656675 2.028908
+curr.accept 0.260000 0.250000 0.300000 0.370000 0.430000 0.1900000 0.300000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.7213896 2.337302 0.692534 1.834589 0.4616893
+curr.accept 0.270000 0.240000 0.1500000 0.280000 0.230000 0.340000 0.3200000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.901737 0.9784472 2.641808 2.113446
+curr.accept 0.2300000 0.150000 0.2400000 0.180000 0.310000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 5, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 305, upper = 484, total = 789
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]    [,4]     [,5]     [,6]    [,7]
+curr.scale  0.901737 2.201506 2.641808 2.43469 2.201506 0.692534 2.43469
+curr.accept 0.350000 0.260000 0.130000 0.28000 0.270000 0.380000 0.24000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.5771117 2.337302 0.692534 2.201506 0.5540272
+curr.accept 0.210000 0.240000 0.2700000 0.280000 0.330000 0.230000 0.2800000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.7213896 0.9784472 2.113446 2.536135
+curr.accept 0.2200000 0.3200000 0.2600000 0.220000 0.290000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 4, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 386, upper = 403, total = 789
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]    [,4]     [,5]      [,6]    [,7]
+curr.scale  1.082084 2.201506 2.113446 2.43469 2.201506 0.8310408 2.43469
+curr.accept 0.110000 0.200000 0.200000 0.24000 0.250000 0.2700000 0.29000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.5771117 2.337302 0.8310408 2.201506 0.5540272
+curr.accept 0.280000 0.240000 0.3100000 0.170000 0.1900000 0.210000 0.3000000
+                [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9393093 0.8656675 0.9784472 2.113446 2.536135
+curr.accept 0.3400000 0.2100000 0.2600000 0.320000 0.230000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 3, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 300, upper = 461, total = 761
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]    [,4]     [,5]      [,6]    [,7]
+curr.scale  0.8656675 1.761205 1.690757 2.43469 2.201506 0.8310408 2.43469
+curr.accept 0.2300000 0.240000 0.330000 0.25000 0.250000 0.2900000 0.20000
+                [,8]     [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.692534 1.869842 0.6648326 2.201506 0.6648326
+curr.accept 0.230000 0.290000 0.310000 0.320000 0.2900000 0.230000 0.1600000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.127171 0.8656675 0.9784472 2.536135 2.536135
+curr.accept 0.260000 0.3100000 0.2800000 0.200000 0.230000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 4, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 349, upper = 411, total = 760
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]    [,4]     [,5]      [,6]     [,7]
+curr.scale  0.8656675 1.761205 2.028908 2.43469 2.201506 0.8310408 1.947752
+curr.accept 0.2900000 0.330000 0.280000 0.26000 0.340000 0.2500000 0.350000
+                [,8]     [,9]     [,10]   [,11]     [,12]    [,13]     [,14]
+curr.scale  1.082084 2.201506 0.8310408 2.24381 0.6648326 2.201506 0.5318661
+curr.accept 0.320000 0.180000 0.2400000 0.26000 0.2900000 0.270000 0.2700000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.127171 1.038801 0.9784472 2.028908 2.536135
+curr.accept 0.220000 0.250000 0.2700000 0.290000 0.220000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 4, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 327, upper = 418, total = 745
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]    [,4]     [,5]      [,6]     [,7]
+curr.scale  0.8656675 2.113446 2.028908 2.43469 2.641808 0.8310408 2.337302
+curr.accept 0.2500000 0.260000 0.310000 0.21000 0.200000 0.3100000 0.280000
+                [,8]     [,9]     [,10]   [,11]     [,12]    [,13]     [,14]
+curr.scale  1.298501 1.761205 0.8310408 2.24381 0.6648326 2.201506 0.5318661
+curr.accept 0.140000 0.360000 0.2000000 0.30000 0.3300000 0.330000 0.3200000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.127171 1.038801 0.9784472 2.028908 2.536135
+curr.accept 0.120000 0.250000 0.2500000 0.400000 0.180000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 7, total = 10
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 1, total = 2
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 329, upper = 427, total = 756
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]    [,3]    [,4]     [,5]     [,6]     [,7]
+curr.scale  0.8656675 2.113446 2.43469 2.43469 2.113446 0.997249 2.337302
+curr.accept 0.2800000 0.200000 0.29000 0.28000 0.340000 0.160000 0.260000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.038801 2.113446 0.6648326 2.692572 0.7977992 2.641808 0.6382393
+curr.accept 0.310000 0.280000 0.3800000 0.230000 0.2800000 0.220000 0.2400000
+               [,15]    [,16]     [,17]   [,18]    [,19]
+curr.scale  0.901737 1.038801 0.9784472 2.43469 2.028908
+curr.accept 0.370000 0.210000 0.2600000 0.22000 0.150000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 4, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 1, total = 2
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 346, upper = 413, total = 759
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]    [,3]    [,4]     [,5]      [,6]     [,7]
+curr.scale  0.8656675 1.690757 2.43469 2.43469 2.536135 0.7977992 2.337302
+curr.accept 0.3200000 0.410000 0.26000 0.24000 0.260000 0.3400000 0.360000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.246561 2.113446 0.7977992 2.692572 0.7977992 2.641808 0.6382393
+curr.accept 0.200000 0.340000 0.2400000 0.200000 0.3000000 0.190000 0.1800000
+               [,15]    [,16]     [,17]   [,18]    [,19]
+curr.scale  1.082084 1.038801 0.9784472 2.43469 1.623127
+curr.accept 0.220000 0.270000 0.2500000 0.29000 0.360000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 6, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 324, upper = 411, total = 735
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]    [,3]    [,4]     [,5]     [,6]     [,7]
+curr.scale  1.038801 2.028908 2.43469 2.43469 2.536135 0.957359 2.804763
+curr.accept 0.300000 0.270000 0.30000 0.31000 0.190000 0.220000 0.180000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  0.997249 2.536135 0.7977992 2.154058 0.957359 2.113446 0.5105915
+curr.accept 0.360000 0.250000 0.3200000 0.260000 0.210000 0.210000 0.2900000
+               [,15]    [,16]     [,17]   [,18]    [,19]
+curr.scale  1.082084 1.038801 0.9784472 2.43469 1.947752
+curr.accept 0.220000 0.250000 0.2200000 0.30000 0.450000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 4, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 342, upper = 475, total = 817
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    [,7]
+curr.scale  1.246561 2.028908 2.921628 2.921628 2.028908 0.957359 2.24381
+curr.accept 0.200000 0.250000 0.250000 0.210000 0.260000 0.280000 0.25000
+                [,8]     [,9]    [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.196699 2.536135 0.957359 2.154058 0.957359 2.113446 0.5105915
+curr.accept 0.260000 0.250000 0.130000 0.230000 0.180000 0.250000 0.4200000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.082084 1.038801 0.9784472 2.921628 2.337302
+curr.accept 0.360000 0.260000 0.1700000 0.220000 0.300000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 2, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 272, upper = 491, total = 763
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    [,7]
+curr.scale  0.997249 2.028908 2.921628 2.921628 2.028908 0.957359 2.24381
+curr.accept 0.220000 0.230000 0.230000 0.230000 0.270000 0.250000 0.38000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.196699 2.536135 0.7658872 2.154058 0.7658872 2.113446 0.6127098
+curr.accept 0.260000 0.350000 0.2300000 0.290000 0.2900000 0.320000 0.2000000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.298501 1.038801 0.7827578 2.921628 2.804763
+curr.accept 0.180000 0.190000 0.2100000 0.190000 0.190000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 3, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 387, upper = 412, total = 799
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.997249 2.028908 2.921628 2.921628 2.028908 0.957359 2.692572
+curr.accept 0.270000 0.240000 0.160000 0.180000 0.220000 0.260000 0.290000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.196699 3.043362 0.7658872 2.154058 0.7658872 2.536135 0.4901678
+curr.accept 0.260000 0.170000 0.2000000 0.260000 0.2700000 0.270000 0.3300000
+               [,15]     [,16]     [,17]    [,18]   [,19]
+curr.scale  1.038801 0.8310408 0.7827578 2.337302 2.24381
+curr.accept 0.310000 0.3600000 0.4200000 0.250000 0.34000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 5, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 340, upper = 441, total = 781
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.997249 2.028908 2.337302 2.337302 2.028908 0.957359 2.692572
+curr.accept 0.260000 0.260000 0.310000 0.240000 0.280000 0.300000 0.230000
+                [,8]    [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.196699 2.43469 0.6127098 2.154058 0.7658872 2.536135 0.5882014
+curr.accept 0.320000 0.20000 0.2900000 0.340000 0.3500000 0.230000 0.2400000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.246561 0.997249 0.9393093 2.337302 2.692572
+curr.accept 0.150000 0.250000 0.2800000 0.310000 0.270000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 5, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 349, upper = 392, total = 741
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.997249 2.028908 2.804763 2.337302 2.028908 1.148831 2.692572
+curr.accept 0.240000 0.310000 0.220000 0.250000 0.270000 0.170000 0.250000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.436038 1.947752 0.6127098 2.584869 0.9190646 2.536135 0.5882014
+curr.accept 0.160000 0.330000 0.2500000 0.210000 0.1900000 0.320000 0.2900000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.997249 0.997249 0.9393093 2.804763 2.692572
+curr.accept 0.240000 0.180000 0.2000000 0.180000 0.280000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 3, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 323, upper = 415, total = 738
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.997249 2.43469 2.804763 2.337302 2.028908 0.9190646 2.692572
+curr.accept 0.300000 0.25000 0.220000 0.330000 0.230000 0.2200000 0.270000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.148831 2.337302 0.6127098 2.584869 0.7352517 3.043362 0.5882014
+curr.accept 0.300000 0.340000 0.2600000 0.250000 0.3700000 0.210000 0.2600000
+               [,15]     [,16]     [,17]   [,18]    [,19]
+curr.scale  0.997249 0.7977992 0.7514475 2.24381 2.692572
+curr.accept 0.330000 0.3300000 0.3300000 0.32000 0.210000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 7, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 318, upper = 470, total = 788
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.196699 2.43469 2.804763 2.804763 2.028908 0.9190646 2.692572
+curr.accept 0.130000 0.24000 0.240000 0.210000 0.220000 0.2500000 0.220000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.378597 2.804763 0.6127098 2.584869 0.8823021 3.043362 0.5882014
+curr.accept 0.180000 0.240000 0.3100000 0.270000 0.1500000 0.180000 0.3800000
+               [,15]    [,16]    [,17]    [,18]    [,19]
+curr.scale  1.196699 0.957359 0.901737 2.692572 2.692572
+curr.accept 0.260000 0.280000 0.320000 0.210000 0.150000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 3, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 348, upper = 423, total = 771
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.957359 2.43469 2.804763 2.804763 2.028908 0.9190646 2.692572
+curr.accept 0.250000 0.22000 0.270000 0.210000 0.380000 0.2100000 0.210000
+                [,8]     [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.102878 2.804763 0.7352517 2.584869 0.7058416 2.43469 0.7058416
+curr.accept 0.340000 0.210000 0.2000000 0.260000 0.3100000 0.21000 0.1900000
+               [,15]    [,16]    [,17]    [,18]    [,19]
+curr.scale  1.196699 0.957359 1.082084 2.692572 2.154058
+curr.accept 0.170000 0.170000 0.290000 0.330000 0.270000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 4, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 328, upper = 434, total = 762
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.957359 2.43469 2.804763 2.804763 2.43469 0.9190646 2.692572
+curr.accept 0.230000 0.29000 0.200000 0.230000 0.24000 0.2100000 0.260000
+                [,8]     [,9]     [,10]    [,11]   [,12]   [,13]     [,14]
+curr.scale  1.323453 2.804763 0.5882014 2.584869 0.84701 2.43469 0.5646733
+curr.accept 0.210000 0.170000 0.3400000 0.250000 0.31000 0.28000 0.2500000
+               [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  0.957359 0.7658872 1.082084 3.231087 2.154058
+curr.accept 0.360000 0.4300000 0.170000 0.200000 0.360000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 5, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 334, upper = 394, total = 728
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]    [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.957359 2.43469 2.24381 2.804763 2.43469 0.9190646 2.692572
+curr.accept 0.390000 0.22000 0.32000 0.200000 0.15000 0.2200000 0.210000
+                [,8]    [,9]     [,10]    [,11]    [,12]   [,13]     [,14]
+curr.scale  1.323453 2.24381 0.7058416 2.584869 1.016412 2.43469 0.5646733
+curr.accept 0.300000 0.21000 0.2300000 0.190000 0.160000 0.17000 0.3300000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 0.9190646 0.8656675 2.584869 2.584869
+curr.accept 0.250000 0.2100000 0.3500000 0.240000 0.250000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 4, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 383, upper = 395, total = 778
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]    [,4]     [,5]      [,6]     [,7]
+curr.scale  1.148831 2.43469 2.692572 2.24381 1.947752 0.9190646 2.692572
+curr.accept 0.250000 0.21000 0.190000 0.30000 0.300000 0.2200000 0.140000
+                [,8]    [,9]     [,10]    [,11]     [,12]    [,13]    [,14]
+curr.scale  1.588144 2.24381 0.7058416 2.067895 0.8131296 1.947752 0.677608
+curr.accept 0.180000 0.23000 0.2800000 0.260000 0.2600000 0.380000 0.130000
+               [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  1.148831 0.9190646 1.038801 2.584869 2.584869
+curr.accept 0.220000 0.3200000 0.200000 0.290000 0.220000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 2, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 312, upper = 498, total = 810
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.148831 2.43469 2.154058 2.692572 2.337302 0.9190646 2.154058
+curr.accept 0.280000 0.18000 0.440000 0.310000 0.290000 0.3500000 0.310000
+                [,8]    [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.270515 2.24381 0.7058416 2.067895 0.8131296 2.337302 0.5420864
+curr.accept 0.230000 0.26000 0.2300000 0.360000 0.2400000 0.320000 0.3600000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 1.102878 0.8310408 2.584869 2.584869
+curr.accept 0.210000 0.230000 0.2400000 0.310000 0.130000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 8, total = 10
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 278, upper = 455, total = 733
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  1.148831 1.947752 2.584869 3.231087 2.337302 1.102878 2.584869
+curr.accept 0.160000 0.320000 0.250000 0.100000 0.220000 0.150000 0.280000
+                [,8]    [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.270515 2.24381 0.7058416 2.481475 0.8131296 2.804763 0.6505037
+curr.accept 0.220000 0.26000 0.2500000 0.290000 0.3300000 0.250000 0.1800000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 1.102878 0.8310408 3.101843 2.067895
+curr.accept 0.230000 0.180000 0.2500000 0.130000 0.290000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 6, upper = 2, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 273, upper = 491, total = 764
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.9190646 2.337302 2.584869 2.584869 2.337302 0.8823021 2.584869
+curr.accept 0.3700000 0.280000 0.320000 0.220000 0.210000 0.3400000 0.260000
+                [,8]    [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.270515 2.24381 0.7058416 2.481475 0.9757555 2.804763 0.5204029
+curr.accept 0.180000 0.27000 0.2300000 0.280000 0.1500000 0.130000 0.2900000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 0.8823021 0.8310408 2.481475 2.067895
+curr.accept 0.280000 0.2400000 0.2300000 0.280000 0.260000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 3, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 289, upper = 456, total = 745
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  1.102878 2.337302 3.101843 2.584869 2.337302 1.058762 2.584869
+curr.accept 0.230000 0.270000 0.180000 0.260000 0.210000 0.230000 0.250000
+                [,8]    [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.016412 2.24381 0.7058416 2.481475 0.7806044 2.24381 0.5204029
+curr.accept 0.280000 0.25000 0.1900000 0.300000 0.3400000 0.29000 0.3100000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 0.8823021 0.8310408 2.481475 2.067895
+curr.accept 0.270000 0.3200000 0.1500000 0.230000 0.290000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 3, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 333, upper = 387, total = 720
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  1.102878 2.337302 2.481475 2.584869 2.337302 1.058762 2.584869
+curr.accept 0.230000 0.320000 0.250000 0.230000 0.220000 0.170000 0.200000
+                [,8]    [,9]     [,10]    [,11]     [,12]   [,13]     [,14]
+curr.scale  1.016412 2.24381 0.5646733 2.977769 0.9367253 2.24381 0.6244835
+curr.accept 0.280000 0.40000 0.3400000 0.220000 0.2800000 0.30000 0.2700000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.148831 1.058762 0.6648326 2.481475 2.067895
+curr.accept 0.130000 0.190000 0.2800000 0.290000 0.320000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 4, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 329, upper = 421, total = 750
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]    [,6]     [,7]
+curr.scale  1.102878 2.804763 2.481475 2.584869 2.337302 0.84701 2.067895
+curr.accept 0.260000 0.180000 0.310000 0.210000 0.290000 0.26000 0.280000
+                [,8]     [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.016412 2.692572 0.677608 2.977769 0.9367253 2.692572 0.6244835
+curr.accept 0.350000 0.210000 0.260000 0.210000 0.3200000 0.140000 0.2300000
+                [,15]   [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9190646 0.84701 0.6648326 2.481475 2.481475
+curr.accept 0.3700000 0.34000 0.3200000 0.270000 0.280000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 6, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 348, upper = 428, total = 776
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]    [,6]     [,7]
+curr.scale  1.102878 2.24381 2.977769 2.584869 2.337302 0.84701 2.067895
+curr.accept 0.270000 0.22000 0.150000 0.180000 0.260000 0.33000 0.350000
+                [,8]     [,9]    [,10]    [,11]   [,12]    [,13]     [,14]
+curr.scale  1.219694 2.692572 0.677608 2.977769 1.12407 2.154058 0.6244835
+curr.accept 0.200000 0.270000 0.300000 0.190000 0.15000 0.250000 0.1900000
+               [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.102878 1.016412 0.7977992 2.481475 2.481475
+curr.accept 0.140000 0.260000 0.2600000 0.210000 0.220000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 6, upper = 2, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 379, upper = 393, total = 772
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  1.102878 2.24381 2.382216 2.067895 2.337302 1.016412 2.481475
+curr.accept 0.240000 0.28000 0.280000 0.250000 0.310000 0.160000 0.220000
+                 [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  0.9757555 2.692572 0.8131296 2.382216 0.8992563 2.154058 0.4995868
+curr.accept 0.2800000 0.250000 0.1700000 0.300000 0.2500000 0.250000 0.3900000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.8823021 1.016412 0.7977992 2.481475 2.481475
+curr.accept 0.2900000 0.340000 0.3200000 0.260000 0.250000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 4, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 331, upper = 431, total = 762
+- b: rbind(curr.scale, curr.accept)
+                [,1]    [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.102878 2.24381 2.382216 2.067895 2.804763 0.8131296 2.481475
+curr.accept 0.190000 0.32000 0.260000 0.280000 0.190000 0.2600000 0.260000
+                 [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  0.9757555 2.692572 0.6505037 2.858659 0.8992563 2.154058 0.5995042
+curr.accept 0.2800000 0.240000 0.2200000 0.210000 0.2600000 0.310000 0.2200000
+                [,15]    [,16]    [,17]    [,18]    [,19]
+curr.scale  0.8823021 1.219694 0.957359 2.481475 2.481475
+curr.accept 0.2600000 0.100000 0.270000 0.230000 0.200000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 2, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 313, upper = 448, total = 761
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]    [,5]      [,6]     [,7]
+curr.scale  0.8823021 2.692572 2.382216 2.067895 2.24381 0.8131296 2.481475
+curr.accept 0.3000000 0.250000 0.220000 0.330000 0.30000 0.2100000 0.200000
+                 [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  0.9757555 2.692572 0.6505037 2.858659 0.8992563 2.584869 0.5995042
+curr.accept 0.3000000 0.230000 0.2800000 0.190000 0.2900000 0.260000 0.2300000
+                [,15]     [,16]    [,17]    [,18]   [,19]
+curr.scale  0.8823021 0.9757555 0.957359 2.481475 1.98518
+curr.accept 0.3400000 0.2100000 0.280000 0.280000 0.32000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 3, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 347, upper = 420, total = 767
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.058762 2.692572 2.382216 2.481475 2.692572 0.8131296 1.98518
+curr.accept 0.210000 0.190000 0.260000 0.230000 0.310000 0.3000000 0.47000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.170907 2.692572 0.6505037 2.286927 0.8992563 2.584869 0.5995042
+curr.accept 0.260000 0.250000 0.2400000 0.370000 0.3000000 0.270000 0.2900000
+               [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  1.058762 0.9757555 0.957359 2.481475 2.382216
+curr.accept 0.400000 0.2600000 0.200000 0.210000 0.160000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 4, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 331, upper = 430, total = 761
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.058762 2.154058 2.382216 2.481475 3.231087 0.9757555 2.382216
+curr.accept 0.250000 0.280000 0.280000 0.310000 0.230000 0.2500000 0.320000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.170907 2.692572 0.6505037 2.744312 1.079108 2.584869 0.5995042
+curr.accept 0.250000 0.320000 0.3100000 0.230000 0.190000 0.290000 0.3800000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.270515 0.9757555 0.7658872 2.481475 1.905772
+curr.accept 0.200000 0.2800000 0.2800000 0.280000 0.300000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 5, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 352, upper = 422, total = 774
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  1.058762 2.154058 2.382216 2.977769 3.231087 0.9757555 2.858659
+curr.accept 0.280000 0.290000 0.250000 0.250000 0.130000 0.2100000 0.320000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]    [,14]
+curr.scale  1.170907 3.231087 0.7806044 2.744312 0.863286 2.584869 0.719405
+curr.accept 0.250000 0.130000 0.1400000 0.200000 0.270000 0.260000 0.170000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.016412 0.9757555 0.7658872 2.481475 2.286927
+curr.accept 0.260000 0.2300000 0.3300000 0.290000 0.350000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 3, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 297, upper = 480, total = 777
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.058762 2.154058 2.382216 2.977769 2.584869 0.9757555 3.43039
+curr.accept 0.170000 0.280000 0.340000 0.210000 0.310000 0.2400000 0.17000
+                [,8]     [,9]     [,10]   [,11]    [,12]    [,13]    [,14]
+curr.scale  1.170907 2.584869 0.6244835 2.19545 0.863286 2.584869 0.575524
+curr.accept 0.210000 0.290000 0.3400000 0.30000 0.210000 0.220000 0.340000
+               [,15]     [,16]     [,17]    [,18]    [,19]
+curr.scale  1.016412 0.9757555 0.9190646 2.481475 2.744312
+curr.accept 0.260000 0.2900000 0.2700000 0.320000 0.200000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 5, total = 7
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 353, upper = 427, total = 780
+- b: rbind(curr.scale, curr.accept)
+               [,1]     [,2]     [,3]     [,4]     [,5]      [,6]     [,7]
+curr.scale  0.84701 2.154058 2.858659 2.977769 3.101843 0.9757555 2.744312
+curr.accept 0.33000 0.300000 0.250000 0.310000 0.160000 0.2500000 0.200000
+                [,8]     [,9]     [,10]   [,11]    [,12]    [,13]     [,14]
+curr.scale  1.170907 2.584869 0.7493802 2.63454 0.863286 2.584869 0.6906288
+curr.accept 0.270000 0.270000 0.2000000 0.30000 0.220000 0.290000 0.2300000
+               [,15]     [,16]     [,17]    [,18]   [,19]
+curr.scale  1.016412 0.9757555 0.9190646 2.977769 2.19545
+curr.accept 0.290000 0.2900000 0.2000000 0.290000 0.37000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 3, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 381, upper = 421, total = 802
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.016412 2.584869 2.858659 3.573323 2.481475 0.9757555 2.19545
+curr.accept 0.360000 0.200000 0.310000 0.220000 0.330000 0.2000000 0.29000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.170907 2.584869 0.5995042 3.161448 0.863286 2.584869 0.6906288
+curr.accept 0.350000 0.210000 0.3500000 0.230000 0.280000 0.320000 0.3100000
+               [,15]     [,16]     [,17]    [,18]   [,19]
+curr.scale  1.016412 0.9757555 0.7352517 2.977769 2.63454
+curr.accept 0.240000 0.2900000 0.4000000 0.280000 0.23000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 8, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 280, upper = 487, total = 767
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]    [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.219694 2.067895 3.43039 3.573323 2.977769 0.7806044 2.19545
+curr.accept 0.210000 0.270000 0.21000 0.190000 0.220000 0.2200000 0.32000
+                [,8]     [,9]    [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.405088 2.584869 0.719405 3.161448 0.863286 3.101843 0.8287546
+curr.accept 0.220000 0.140000 0.220000 0.250000 0.240000 0.240000 0.1400000
+               [,15]     [,16]     [,17]    [,18]   [,19]
+curr.scale  1.016412 0.9757555 0.8823021 2.977769 2.63454
+curr.accept 0.270000 0.2000000 0.2500000 0.280000 0.22000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 1, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 302, upper = 469, total = 771
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]    [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.219694 2.067895 3.43039 2.858659 2.977769 0.7806044 2.63454
+curr.accept 0.210000 0.210000 0.19000 0.180000 0.210000 0.3100000 0.27000
+                [,8]     [,9]    [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.405088 2.067895 0.719405 3.161448 0.863286 3.101843 0.6630037
+curr.accept 0.260000 0.300000 0.150000 0.150000 0.210000 0.150000 0.2300000
+               [,15]     [,16]     [,17]    [,18]   [,19]
+curr.scale  1.016412 0.7806044 0.8823021 2.977769 2.63454
+curr.accept 0.280000 0.4100000 0.3700000 0.250000 0.19000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 6, upper = 3, total = 9
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 386, upper = 378, total = 764
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.219694 2.067895 2.744312 2.286927 2.977769 0.9367253 2.63454
+curr.accept 0.180000 0.250000 0.240000 0.240000 0.260000 0.2600000 0.23000
+                [,8]     [,9]    [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.405088 2.481475 0.575524 2.529158 0.863286 2.481475 0.6630037
+curr.accept 0.170000 0.200000 0.280000 0.260000 0.330000 0.210000 0.2400000
+               [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  1.016412 0.9367253 1.058762 2.977769 2.107632
+curr.accept 0.240000 0.2600000 0.180000 0.180000 0.300000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 4, upper = 1, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 337, upper = 449, total = 786
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  0.9757555 2.067895 2.744312 2.286927 2.977769 0.9367253 2.63454
+curr.accept 0.3500000 0.310000 0.300000 0.240000 0.220000 0.3300000 0.25000
+               [,8]    [,9]    [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.12407 1.98518 0.575524 2.529158 1.035943 2.481475 0.6630037
+curr.accept 0.31000 0.43000 0.390000 0.240000 0.230000 0.250000 0.1800000
+               [,15]     [,16]   [,17]    [,18]    [,19]
+curr.scale  1.016412 0.9367253 0.84701 2.382216 2.529158
+curr.accept 0.200000 0.3100000 0.33000 0.340000 0.190000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 9, total = 11
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 349, upper = 365, total = 714
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]     [,3]     [,4]     [,5]    [,6]    [,7]
+curr.scale  1.170907 2.481475 3.293175 2.286927 2.977769 1.12407 2.63454
+curr.accept 0.270000 0.290000 0.150000 0.240000 0.210000 0.14000 0.29000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.348884 2.382216 0.6906288 2.529158 1.035943 2.481475 0.5304029
+curr.accept 0.240000 0.180000 0.2400000 0.180000 0.230000 0.280000 0.3700000
+                [,15]   [,16]    [,17]    [,18]    [,19]
+curr.scale  0.8131296 1.12407 1.016412 2.858659 2.023327
+curr.accept 0.4100000 0.16000 0.230000 0.210000 0.340000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 3, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 360, upper = 416, total = 776
+- b: rbind(curr.scale, curr.accept)
+                [,1]     [,2]    [,3]     [,4]     [,5]      [,6]    [,7]
+curr.scale  1.170907 2.481475 2.63454 2.286927 2.977769 0.8992563 2.63454
+curr.accept 0.160000 0.160000 0.28000 0.170000 0.250000 0.3000000 0.20000
+                [,8]     [,9]     [,10]    [,11]    [,12]    [,13]     [,14]
+curr.scale  1.348884 1.905772 0.6906288 2.023327 1.035943 2.481475 0.6364835
+curr.accept 0.230000 0.420000 0.2200000 0.250000 0.150000 0.210000 0.2400000
+                [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  0.9757555 0.8992563 1.016412 2.858659 2.427992
+curr.accept 0.2200000 0.2500000 0.220000 0.210000 0.180000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 5, upper = 1, total = 6
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 291, upper = 443, total = 734
+- b: rbind(curr.scale, curr.accept)
+                 [,1]    [,2]    [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.9367253 1.98518 2.63454 1.829542 2.977769 1.079108 2.107632
+curr.accept 0.4000000 0.29000 0.30000 0.400000 0.240000 0.260000 0.340000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.348884 2.286927 0.6906288 2.023327 0.8287546 2.481475 0.6364835
+curr.accept 0.300000 0.290000 0.2500000 0.340000 0.3100000 0.220000 0.2800000
+                [,15]     [,16]    [,17]    [,18]    [,19]
+curr.scale  0.9757555 0.8992563 1.016412 2.858659 1.942394
+curr.accept 0.2900000 0.1700000 0.190000 0.250000 0.340000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 2, upper = 6, total = 8
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 0, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 374, upper = 396, total = 770
+- b: rbind(curr.scale, curr.accept)
+               [,1]    [,2]     [,3]    [,4]     [,5]     [,6]     [,7]
+curr.scale  1.12407 1.98518 3.161448 2.19545 2.977769 1.079108 2.529158
+curr.accept 0.20000 0.27000 0.170000 0.20000 0.250000 0.210000 0.240000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.618661 2.286927 0.6906288 2.427992 0.9945055 2.481475 0.6364835
+curr.accept 0.170000 0.250000 0.2600000 0.250000 0.2400000 0.260000 0.2500000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9757555 0.719405 0.8131296 2.858659 2.330872
+curr.accept 0.2000000 0.460000 0.2900000 0.160000 0.270000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 3, upper = 1, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 304, upper = 447, total = 751
+- b: rbind(curr.scale, curr.accept)
+                 [,1]    [,2]     [,3]    [,4]     [,5]     [,6]     [,7]
+curr.scale  0.8992563 1.98518 2.529158 1.75636 2.977769 1.079108 2.529158
+curr.accept 0.2300000 0.26000 0.280000 0.38000 0.200000 0.220000 0.280000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.294929 2.286927 0.6906288 2.427992 0.9945055 2.481475 0.6364835
+curr.accept 0.260000 0.230000 0.2700000 0.290000 0.1800000 0.280000 0.2500000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.7806044 0.863286 0.8131296 2.286927 2.330872
+curr.accept 0.3100000 0.270000 0.2900000 0.310000 0.240000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 3, total = 4
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 1, total = 2
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 323, upper = 413, total = 736
+- b: rbind(curr.scale, curr.accept)
+                 [,1]    [,2]     [,3]     [,4]     [,5]     [,6]     [,7]
+curr.scale  0.8992563 1.98518 2.529158 2.107632 2.382216 1.079108 2.529158
+curr.accept 0.2900000 0.32000 0.290000 0.250000 0.260000 0.200000 0.340000
+                [,8]     [,9]     [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.294929 2.286927 0.6906288 2.427992 0.7956044 2.481475 0.6364835
+curr.accept 0.290000 0.240000 0.1900000 0.240000 0.2900000 0.290000 0.2500000
+                [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  0.9367253 0.863286 0.8131296 2.744312 2.330872
+curr.accept 0.3000000 0.360000 0.3300000 0.250000 0.290000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 1, upper = 4, total = 5
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 1, total = 1
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 345, upper = 418, total = 763
+- b: rbind(curr.scale, curr.accept)
+                 [,1]     [,2]     [,3]     [,4]     [,5]     [,6]    [,7]
+curr.scale  0.8992563 2.382216 2.529158 2.107632 2.382216 0.863286 3.03499
+curr.accept 0.2600000 0.260000 0.210000 0.270000 0.210000 0.340000 0.21000
+                [,8]     [,9]    [,10]    [,11]     [,12]    [,13]     [,14]
+curr.scale  1.294929 2.286927 0.552503 2.427992 0.7956044 2.481475 0.6364835
+curr.accept 0.230000 0.300000 0.330000 0.280000 0.3500000 0.220000 0.2200000
+              [,15]    [,16]     [,17]    [,18]    [,19]
+curr.scale  1.12407 1.035943 0.9757555 2.744312 2.330872
+curr.accept 0.22000 0.300000 0.2800000 0.210000 0.290000
+- var.name: b
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 3, total = 3
+- var.name: p
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    scale bound reached #: lower = 0, upper = 0
+    ill acceptance #: none = 0, all = 0
+    acceptance NOT in range #: lower = 321, upper = 407, total = 728
+- var.name: b
+    ill acceptance #: none = 0, all = 0
+    last renew NOT in range #: lower = 0, upper = 3, total = 3
+- var.name: p
+    ill acceptance #: none = 0, all = 0
+    last renew NOT in range #: lower = 0, upper = 0, total = 0
+- var.name: phi
+    ill acceptance #: none = 0, all = 0
+    last renew NOT in range #: lower = 321, upper = 407, total = 728
+Geweke Z score after samples: 751	-3.51140043913388	 test was performed on 376 samples
+There were 50 or more warnings (use warnings() to see the first 50)
+Elapsed time for 1 chains doing  iterations on 5 cores was 226.63 min
+process results...
+saving results...
+finished at: 2015-05-18 18:52:56 

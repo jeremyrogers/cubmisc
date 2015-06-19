@@ -15,7 +15,7 @@ if(sum(check.pack) != length(check.pack))
 
 
 #suppressMessages(library(cubfits, quietly = TRUE))
-suppressMessages(library(cubfits, lib.loc="~/cubfitsNSEdebug", quietly = TRUE))
+library(cubfits, lib.loc="~/cubfitsBuild", quietly = TRUE)
 suppressMessages(library(psych, quietly = TRUE))
 ##suppressMessages(library(Rmisc, quietly = TRUE))
 suppressMessages(library(getopt, quietly = TRUE))
@@ -161,6 +161,11 @@ if(cubmethods == "cubfits")
   ret.list <- read.empirical.data(fn.phi.in, seq.string, config$selected.env, 0)
   phi.obs <- ret.list$empirical
   phi.obs <- phi.obs[order(names(phi.obs))]
+	#cat(phi.obs);cat("\n");
+
+	# This will scale the phi values such that the mean is one
+	phi.obs <- phi.obs/mean(phi.obs)
+	#cat(phi.obs);cat("\n");
   seq.string <- ret.list$genome
   rm("ret.list")
   
@@ -216,6 +221,7 @@ cat("\t with seeds: ");cat(seeds);cat("\n")
 runtime.info <- system.time(
   {
     .CF.CT$parallel <- config$parallel
+    cat("Running in parallel mode ");cat(.CF.CT$parallel)
     .CF.CONF$compute.logL <- T
     .CF.CT$prior.dist <- "normal"
     iterations <- config$n.samples*config$chain.thin # between convergence checks

@@ -161,4 +161,3 @@ init <- function()
   }##finish all codons
   
   omega
-}

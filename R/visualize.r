@@ -1,114 +1,37 @@
 #library(cubfits, quietly = TRUE, lib.loc = "~/cubfitsNSEdebug/")
 library(cubfits, quietly = TRUE, lib.loc = "~/cubfitsBuild/")
-setwd("~/cubfits/misc/R/")
+#setwd("~/cubmisc/R/")
 source("visualize_utility.r")
 source("run_utility.r")
 source("config.r")
 
+result.folder <- "../results/jeremyyeast/scaledphi3/"
+results <- "../results/jeremyyeast/scaledphi3/jeremyyeastwithPhi.dat"
+results.phi <- "../results/jeremyyeast/scaledphi3/jeremyyeastwithPhi.phi"
+read.genome <- "../jeremyYeast/Genome/jeremyYeast.fasta"
+empirical.data <- "../jeremyYeast/jyeast.scaled.phi.tsv"
+simulated_data <- TRUE;
+
+if(simulated_data) {
+	omega_true <- read.table("../jeremyYeast/codon/Elong_rate/modded_elong_scaled.tsv", sep="\t", header=FALSE)
+	mu_true <- read.table("../jeremyYeast/codon/Mut_rate/PNAS2011_scaled.tsv", sep="\t", header=FALSE)
+}
+
 model <- 'nse';              #nse \ roc
 
-genome <- 'loganYeast';       #ecoli \ REUyeast \ pYeast \ brewYeast \ loganYeast
-prefix <- "02-02"            #generally, date the run started in "MM-DD" format
-suffix <- "NoPhi"            #What was special about this run?
+genome <- 'jeremyYeast';       #ecoli \ REUyeast \ pYeast \ brewYeast \ loganYeast
+prefix <- "06-19"            #generally, date the run started in "MM-DD" format
+suffix <- "Scaled_phi"            #What was special about this run?
 
-delta_a12 <- 0
-a_2 <- 1
-  
+delta.a_12 <- 0
+a_2 <- 4
 
-if(tolower(genome)=="ecoli"){
-  simulated_data <- FALSE;
-
-#### read data
-  result.folder <- paste("../results/test/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", sep="")
-  load(paste(result.folder, "debug", model, genome, ".dat", sep=""))
-  estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
-  seq.string <- readGenome("../data/ecoli_K12_MG1655_genome_filtered.fasta", config$rm.short, config$rm.first.aa)
-  emp <- read.empirical.data("../data/ecoli_X_obs.csv", seq.string, config$selected.env, th=0)
-} else
-if(tolower(genome)=="reuyeast"){
-  simulated_data <- TRUE;
-
-#### read data
-  result.folder <- paste("../results/ny/", prefix, "/", sep="")
-  load(paste(result.folder, "REUyeast.nse.", suffix, ".dat", sep=""))
-  estm.phi <- read.csv(paste(result.folder, "REUyeast.nse.", suffix, ".phi", sep=""))
-  seq.string <- readGenome("../S.cervisiae.REU13/yeast.sim.fasta", config$rm.short, config$rm.first.aa)
-  emp <- read.empirical.data("../S.cervisiae.REU13/yeast.sim.Xobs.csv", seq.string, config$selected.env, th=0)
-  #seq.string <- readGenome("../S.cervisiae.REU13/section1.fasta", config$rm.short, config$rm.first.aa)
-  #emp <- read.empirical.data("../S.cervisiae.REU13/section1sorted.csv", seq.string, config$selected.env, th=0)
-
-
-  omega_true <- read.table("../S.cervisiae.REU13/scaled_omega.csv", header=TRUE)
-  mu_true <- read.table("../S.cervisiae.REU13/scaled_logMu.csv", header=TRUE)
-  names(chain$b.Mat[[1]]) <- read.table("names.txt")[[1]]
-    ###this needs to be fixed!!!
-} else
-if(tolower(genome)=="pyeast"){
-  simulated_data <- TRUE;
-  
-#### read data
-#  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", sep="")
-  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", suffix, "/", sep="")
-  load(paste(result.folder, genome, ".", model, ".", suffix, ".dat" , sep=""))
-  estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
-
-  seq.string <- readGenome("../prestonYeast/S.cerevisiae.S288c.fasta", config$rm.short, config$rm.first.aa)
-  emp <- read.empirical.data("../prestonYeast/pyeast.phi.tsv", seq.string, config$selected.env, th=0)
-  omega_true <- read.table("../prestonYeast/scaled_omega.csv", header = TRUE)
-  mu_true <- read.table("../prestonYeast/scaled_logMu.csv", header = TRUE)
-  names(chain$b.Mat[[1]]) <- read.table("names.txt")[[1]]
-    ###this needs to be fixed!!!
-} else
-if(tolower(genome)=="loganyeast"){
-    simulated_data <- TRUE;
-    
-    #### read data
-    #result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", sep="")
-    result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", suffix, "/", sep="")
-    
-    load(paste(result.folder, genome, ".", model, ".", suffix, ".dat" , sep=""))
-    estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
-    
-    if(suffix=="Cubfits1"){
-      seq.string <- readGenome("../loganYeast/CubfitsValues1.fasta", config$rm.short, config$rm.first.aa)
-      omega_true <- read.table("../loganYeast/codonData/modded_omega.csv", header = TRUE)
-    }
-    else if(suffix=="Cubfits2"){
-      seq.string <- readGenome("../loganYeast/CubfitsValues2.fasta", config$rm.short, config$rm.first.aa)
-      omega_true <- read.table("../loganYeast/codonData/modded_omega.csv", header = TRUE)
-    }
-    else if(suffix=="Preston2"){
-      seq.string <- readGenome("../loganYeast/PrestonValues2.fasta", config$rm.short, config$rm.first.aa)
-      omega_true <- read.table("../loganYeast/codonData/S.cerevisiae.2007.omega.csv", header = TRUE)
-    }
-    else{
-      seq.string <- readGenome("../loganYeast/PrestonValues1.fasta", config$rm.short, config$rm.first.aa)
-      omega_true <- read.table("../loganYeast/codonData/S.cerevisiae.2007.omega.csv", header = TRUE)
-    }
-    
-    emp <- read.empirical.data("../loganYeast/pyeast.phi.tsv", seq.string, config$selected.env, th=0)
-    mu_true <- read.table("../prestonYeast/scaled_logMu.csv", header = TRUE)
-    
-    #names(chain$b.Mat[[1]]) <- read.table("names.txt")[[1]]
-    ###this needs to be fixed!!!
-  } else
-if(tolower(genome)=="brewyeast"){
-  simulated_data <- FALSE;
-  
-  #### read data
-  result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", sep="")
-  #result.folder <- paste("../results/", substr(tolower(model),1,1), substr(tolower(genome),1,1), "/", prefix, "/", suffix, "/", sep="")
-  
-  load(paste(result.folder, genome, ".", model, ".", suffix, ".dat" , sep=""))
-  estm.phi <- read.csv(paste(result.folder, genome, ".", model, ".", suffix, ".phi" , sep=""))
-  
-  seq.string <- readGenome("../brewersYeast/s288c.genome.fasta", config$rm.short, config$rm.first.aa)
-  emp <- read.empirical.data("../brewersYeast/yassour2009.phi.tsv", seq.string, config$selected.env, th=0)
-#  omega_true <- read.table("../brewYeast/scaled_omega.csv", header = TRUE)
-#  mu_true <- read.table("../brewYeast/scaled_logMu.csv", header = TRUE)
-  names(chain$b.Mat[[1]]) <- read.table("names.txt")[[1]]
-  ###this needs to be fixed!!!
-}
+load(results)
+estm.phi <- read.csv(results.phi)
+seq.string <- readGenome(read.genome, config$rm.short, config$rm.first.aa)
+emp <- read.empirical.data(empirical.data, seq.string, config$selected.env, th=0)
+cat("read data\n")
+#names(chain$b.Mat[[1]]) <- read.table("names.txt")[[1]]
 
 Prefix <- suffix;
 suffix <- prefix;
@@ -118,13 +41,14 @@ rm(Prefix)
 emp <- emp$empirical[names(emp$empirical) %in% estm.phi[, 1]]
 
 if(simulated_data){
-  require(package = plotrix, lib.loc = "/home/lbrown/cubfits/Dependencies/")
+  require(package = plotrix, lib.loc = "~/cubfits/Dependencies/")
   chunksize <- floor(length(chain$b.Mat)/100)*10
   ci <- .95 #Confidence interval, on a scale of (0,1). e.g. 0.95 means 95%CI
   
   
   #average converged omega
 {
+	write.table(omega_true, file="", quote=FALSE)
   omega <- matrix(0, nrow=length(omega_true[[3]]), ncol=4)
   colnames(omega) <- c("'true' deltaomega", "estimated deltaomega"
                        ,paste("Lower ", ci, "%ci", sep="") , paste("Upper ", ci, "%ci", sep="")
@@ -148,6 +72,7 @@ if(simulated_data){
 
 #average converged mu
 {
+	write.table(mu_true, file="");
   mu <- matrix(0, nrow=length(mu_true[[3]]), ncol=4)
   colnames(mu) <- c("'true' deltaM", "estimated deltaM"
                     ,paste("Lower ", ci, "%ci", sep="") , paste("Upper ", ci, "%ci", sep="")
@@ -167,6 +92,7 @@ if(simulated_data){
   }##finish all codons
   
 }
+
 
 #### PLOT RESULTS VS 'TRUE' VALUES
 # ?
@@ -270,7 +196,7 @@ for(ii in 0:3){
 pdf(paste(result.folder, prefix, "_CUB_obs_bin_", suffix, ".pdf", sep = ""), width = 12, height = 11)
 #plotCUB(data$reu13.df, chain$b.Mat, emp, estm.phi[estm.phi[, 1] %in% names(emp), 2],# rescale=T,
 plotCUB.NSE(data$reu13.df, bMat=chain$b.Mat, phi.bin=emp,
-        model.label="MCMC Posterior", main="CUB binning of observed phi", delta_a12=delta_a12, a_2=a_2,
+        model.label="MCMC Posterior", main="CUB binning of observed phi", delta_a12=delta.a_12, a_2=a_2,
         weightedCenters=TRUE, logBins=TRUE)
 dev.off()
 
@@ -280,7 +206,7 @@ pdf(paste(result.folder, prefix, "_CUB_est_bin_", suffix, ".pdf", sep = ""), wid
 #plotCUB(data$reu13.df, chain$b.Mat, bin.phis, estm.phi[estm.phi[, 1] %in% names(emp), 2], 
 plotCUB.NSE(data$reu13.df, bMat=chain$b.Mat, phi.bin=bin.phis,
         model.label="MCMC Posterior", main="CUB binning of estimated phi"
-        ,delta_a12=delta_a12, a_2=a_2
+        ,delta_a12=delta.a_12, a_2=a_2
         ,weightedCenters=TRUE, logBins=TRUE
         )
 dev.off()
