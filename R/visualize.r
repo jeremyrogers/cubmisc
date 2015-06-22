@@ -13,8 +13,8 @@ empirical.data <- "../jeremyYeast/jyeast.scaled.phi.tsv"
 simulated_data <- TRUE;
 
 if(simulated_data) {
-	omega_true <- read.table("../jeremyYeast/codon/Elong_rate/modded_elong_scaled.tsv", sep="\t", header=FALSE)
-	mu_true <- read.table("../jeremyYeast/codon/Mut_rate/PNAS2011_scaled.tsv", sep="\t", header=FALSE)
+	omega_true <- read.table("../jeremyYeast/codon/Elong_rate/scaled_omega.csv", sep="\t", header=FALSE)
+	mu_true <- read.table("../jeremyYeast/codon/Mut_rate/scaled_logMu.csv", sep="\t", header=FALSE)
 }
 
 model <- 'nse';              #nse \ roc

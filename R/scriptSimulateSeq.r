@@ -10,11 +10,11 @@ GenOptPes <- FALSE
 
 data.folder <- "~/cubmisc/jeremyYeast/"
 dna.file <- "~/cubmisc/jeremyYeast/Genome/jeremyYeast.fasta";
-phi.file <- paste(data.folder, "jyeast.scaled.phi.tsv", sep="")
+phi.file <- paste(data.folder, "jyeast.phi.csv", sep="")
 #nse.pr.file <- paste(data.folder, "codon/NSE_pr/S.cerevisiae.2007.NSE.csv", sep="")
-nse.pr.file <- paste(data.folder, "codon/NSE_pr/modded_NsePr.csv", sep="")
-mut.file <- paste(data.folder, "codon/Mut_rate/PNAS2011_scaled.tsv", sep="")
-out.fasta <- paste(data.folder, "Genome/jeremyYeastScaled.fasta", sep="")
+nse.pr.file <- paste(data.folder, "codon/NSE_pr/modded_NsePr.tsv", sep="")
+mut.file <- paste(data.folder, "codon/Mut_rate/PNAS2011_S.cer.mut.tsv", sep="")
+out.fasta <- paste(data.folder, "Genome/jeremyYeast2.fasta", sep="")
 
 codon.params <- load.codon.parms(init.nse.pr.file = nse.pr.file, init.mut.file = mut.file, obs.nse.pr.file = nse.pr.file, obs.mut.file = mut.file)
 phi <- load.phi(init.phi.file = phi.file, obs.phi.file = phi.file)

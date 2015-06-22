@@ -1,5 +1,5 @@
-omega <- "../jeremyYeast/codon/Elong_rate/modded_elong.tsv"
-output <- "../jeremyYeast/codon/Elong_rate/modded_elong_scaled.tsv"
+omega <- "../prestonYeast/scaled_omega.csv"
+output <- "../jeremyYeast/codon/Elong_rate/scaled_omega.tsv"
 
 orig <- read.table(omega, sep="\t")
 
